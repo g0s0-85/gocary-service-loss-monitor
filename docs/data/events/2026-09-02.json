@@ -22,18 +22,6 @@
       "resolved_at": null,
       "delay_seconds": 2550,
       "alerted": true
-    },
-    {
-      "id": "route_gap:ACX:2026-09-02T20:35:16.031130+00:00",
-      "type": "route_gap",
-      "trip_id": null,
-      "route_id": "ACX",
-      "route_short_name": "ACX",
-      "detected_at": "2026-09-02T20:35:16.031136+00:00",
-      "resolved_at": "2026-09-02T20:41:15.301449+00:00",
-      "delay_seconds": null,
-      "alerted": true,
-      "alerted_resolved": true
     }
   ]
 }
