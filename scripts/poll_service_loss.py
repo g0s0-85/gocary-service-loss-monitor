@@ -78,6 +78,15 @@ ROUTE_GAP_S = 20 * 60
 
 ROUTES_MAX_AGE_S = 7 * 24 * 3600
 
+# Routes still present in the static GTFS mirror (RT-feed short_name form)
+# that GoCary no longer actually operates -- the mirror is a stale snapshot
+# and has no "discontinued" flag, so there's no way to detect this from feed
+# data alone. Maintained manually; confirmed directly by Mark (2026-09-02):
+# ACX was flagged as a false route_gap because the schedule still expects
+# coverage that no longer exists. Anything listed here is excluded entirely
+# from no_show and route_gap detection.
+DISCONTINUED_ROUTES = {"ACX"}
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "docs" / "data"
 LIVE_DIR = DATA_DIR / "live"
@@ -405,6 +414,10 @@ def detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s, f
         tid: {**t, "route_id": route_name(routes, t["route_id"])}
         for tid, t in schedule.get("trips", {}).items()
         if t["service_id"] in active_sids
+    }
+    scheduled_today = {
+        tid: t for tid, t in scheduled_today.items()
+        if t["route_id"] not in DISCONTINUED_ROUTES
     }
     scheduled_by_route = {}
     for info in scheduled_today.values():
