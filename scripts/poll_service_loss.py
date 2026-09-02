@@ -5,8 +5,11 @@ of service loss that ops has historically had to infer by hand from daily
 dispatch logs:
 
   - canceled   -- a trip the RT feed itself flags CANCELED (schedule_relationship)
-  - no_show    -- a trip that was scheduled to run today but never appeared in
-                  either RT feed at all, even well after its scheduled window closed
+  - no_show    -- fewer distinct trips have been observed on a route today than
+                  the number of that route's scheduled trips whose window has
+                  fully closed -- see detect_events()'s no_show section for why
+                  this is a route-level headcount rather than matching specific
+                  trip_ids (GoCary's RT and static feeds don't share an id)
   - severe_delay -- a trip that did run, but fell so far behind (>20 min) that
                   it's effectively a missed connection for anyone relying on it
   - route_gap  -- a route that should have live coverage right now (it has a
@@ -343,20 +346,46 @@ def detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s):
                 "delay_seconds": rec["max_delay"], "alerted": False,
             })
 
-    # no_show: scheduled trips that never appeared in either feed at all,
-    # well after their entire scheduled window has closed
+    # no_show: GoCary's RT feed assigns its own random trip_id (a UUID) that
+    # has no relationship to the static GTFS's trip_id, and neither feed
+    # populates start_time/start_date on the trip descriptor either -- so
+    # there is no field anywhere to match a live trip back to one specific
+    # scheduled trip (confirmed by grepping both raw feeds for either id
+    # format and finding no overlap). Individual trip-level no-show
+    # detection is therefore not possible; instead, per route, compare how
+    # many of that route's scheduled trips should have finished by now
+    # (their window fully closed, past NO_SHOW_GRACE_S) against how many
+    # distinct trip_ids have actually been seen for that route today at all.
+    # A shortfall means that many scheduled runs likely never happened.
+    # Which specific slot(s) is attributed by pairing scheduled and observed
+    # trips in chronological order (earliest scheduled <-> earliest
+    # observed) and flagging whatever's left over at the tail of the
+    # schedule -- this assumes a route's trips run in schedule order, which
+    # holds for GoCary's fixed routes but means a vehicle that skips an
+    # earlier trip and later runs a later one on time can point at the
+    # wrong slot even though the deficit count itself is still accurate.
     active_sids = active_service_ids(schedule.get("calendar", {}), schedule.get("calendar_dates", {}), now_dt.date())
     scheduled_today = {
         tid: t for tid, t in schedule.get("trips", {}).items()
         if t["service_id"] in active_sids
     }
-    for trip_id, info in scheduled_today.items():
-        if trip_id in seen["trips"]:
+    scheduled_by_route = {}
+    for info in scheduled_today.values():
+        scheduled_by_route.setdefault(info["route_id"], []).append(info)
+
+    observed_by_route = {}
+    for trip_id, rec in seen["trips"].items():
+        observed_by_route.setdefault(rec["route_id"], []).append(rec["first_seen"])
+
+    for route_id, trips in scheduled_by_route.items():
+        trips = sorted(trips, key=lambda t: t["start_s"])
+        closed = [t for t in trips if t["end_s"] + NO_SHOW_GRACE_S < now_s]
+        observed_count = len(observed_by_route.get(route_id, []))
+        if observed_count >= len(closed):
             continue
-        if now_s > info["end_s"] + NO_SHOW_GRACE_S:
-            route_id = info["route_id"]
+        for info in closed[observed_count:]:
             add({
-                "id": f"no_show:{trip_id}", "type": "no_show", "trip_id": trip_id,
+                "id": f"no_show:{route_id}:{info['start_s']}", "type": "no_show", "trip_id": None,
                 "route_id": route_id, "route_short_name": route_name(routes, route_id),
                 "scheduled_start_s": info["start_s"], "scheduled_end_s": info["end_s"],
                 "detected_at": now_iso(), "resolved_at": None,
@@ -404,12 +433,18 @@ def send_webhook(text):
         print(f"Warning: webhook post failed ({exc})")
 
 
+def hms_label(seconds):
+    h, m = int(seconds) // 3600, (int(seconds) // 60) % 60
+    return f"{h:02d}:{m:02d}"
+
+
 def describe(event):
     route = event["route_short_name"]
     if event["type"] == "canceled":
         return f":no_entry: Route {route} trip canceled (trip {event['trip_id']})"
     if event["type"] == "no_show":
-        return f":ghost: Route {route} trip never appeared on the RT feed (trip {event['trip_id']}) -- likely missed"
+        window = hms_label(event["scheduled_start_s"])
+        return f":ghost: Route {route}'s trip scheduled around {window} likely never ran (fewer trips observed than scheduled)"
     if event["type"] == "severe_delay":
         mins = round(event["delay_seconds"] / 60)
         return f":turtle: Route {route} trip running {mins} min late (trip {event['trip_id']})"

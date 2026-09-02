@@ -14,10 +14,17 @@ GitHub Actions poller commits JSON under `docs/data/`, and a static
 - **Canceled** — a trip GoCary's own RT feed flags `CANCELED`
   (`schedule_relationship`). Direct signal, but only catches what dispatch
   chooses to report through the feed.
-- **No-show** — a trip that was scheduled to run today (per the static GTFS)
-  but never appeared in either RT feed at all, even 15 minutes after its
-  entire scheduled window closed. The grace period is what separates this
-  from a trip that's just running very late but does eventually show up.
+- **No-show** — GoCary's RT feed assigns each trip a random UUID with no
+  relationship to the static GTFS's `trip_id`, and neither feed populates
+  `start_time`/`start_date` either, so there's no field to match a live trip
+  back to one specific scheduled trip (confirmed by checking both raw feeds
+  directly). Instead this compares, per route, how many scheduled trips
+  should have finished by now (15 min past their window, `NO_SHOW_GRACE_S`)
+  against how many distinct trips actually showed up on that route today —
+  a shortfall is flagged against the earliest unmatched scheduled slot(s),
+  assuming trips run in schedule order. The count is reliable; which exact
+  slot it points at can be wrong if a vehicle skips a trip and runs a later
+  one on time instead.
 - **Severe delay** — a trip that did run, but fell more than 20 minutes
   behind its predicted schedule — a rider-facing miss even though the trip
   technically operated. (This is a different, stricter threshold than
