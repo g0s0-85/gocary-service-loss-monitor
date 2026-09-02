@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-02T22:59:13.352795+00:00",
+  "updated_at": "2026-09-02T23:00:23.680303+00:00",
   "date": "2026-09-02",
   "open_route_gaps": [],
   "today_events": [
@@ -23,6 +23,28 @@
       "detected_at": "2026-09-02T19:32:36.540180+00:00",
       "resolved_at": null,
       "delay_seconds": 2550,
+      "alerted": true
+    },
+    {
+      "id": "severe_delay:9db106e5-477f-4451-a357-fcca228bd078",
+      "type": "severe_delay",
+      "trip_id": "9db106e5-477f-4451-a357-fcca228bd078",
+      "route_id": "9",
+      "route_short_name": "9",
+      "detected_at": "2026-09-02T23:00:23.679037+00:00",
+      "resolved_at": null,
+      "delay_seconds": 3594,
+      "alerted": true
+    },
+    {
+      "id": "severe_delay:d68a6a7e-18b7-4a39-9335-71a8c86352e4",
+      "type": "severe_delay",
+      "trip_id": "d68a6a7e-18b7-4a39-9335-71a8c86352e4",
+      "route_id": "9",
+      "route_short_name": "9",
+      "detected_at": "2026-09-02T23:00:23.679043+00:00",
+      "resolved_at": null,
+      "delay_seconds": 2948,
       "alerted": true
     }
   ]
