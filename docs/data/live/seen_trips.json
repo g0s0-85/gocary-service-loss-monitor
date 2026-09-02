@@ -1,0 +1,579 @@
+{
+  "date": "2026-09-02",
+  "trips": {
+    "9b44dbbf-1079-4ffc-930c-cbded8b633a7": {
+      "route_id": "1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "22dd1afd-fda4-4c74-8aa2-454d13b233c0": {
+      "route_id": "GA1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "50da7fab-2ed8-4e1a-9f8b-50cdf714ac81": {
+      "route_id": "2",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "836b8476-8598-4367-8b94-a0016f6e6450": {
+      "route_id": "6",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "3b2aa0ee-1bc8-4dec-a5fc-9d7f781cca18": {
+      "route_id": "9",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "8d1e2bc9-f748-4240-8434-e56d5408c654": {
+      "route_id": "9",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "40300d78-7353-44e0-b8b8-4ddfb4753651": {
+      "route_id": "6",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "aaeab9cc-65c0-40c7-bc68-be126bffb387": {
+      "route_id": "4",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "56e03242-c912-4f23-b975-170bea525645": {
+      "route_id": "4",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "9330b4bc-fd15-4aeb-853e-2ed502c44d85": {
+      "route_id": "2",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "26c5f4c9-bf02-4a46-b810-e3f30c84e1e3": {
+      "route_id": "GA1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "fe890c27-deb6-4137-a195-ddc5ae5c8533": {
+      "route_id": "7",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "1e2062d0-32f5-4bed-acc5-ba4f08167ff3": {
+      "route_id": "1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "79832c28-5b8c-4ea2-a28f-3892a88b9611": {
+      "route_id": "1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "16ddb67a-3bcd-41c5-8868-c2d40eee5571": {
+      "route_id": "7",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "bb5acf4b-3615-4217-b87a-5cd3644ee828": {
+      "route_id": "GA1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "593a66e7-9c13-4f28-8907-db857595ef43": {
+      "route_id": "2",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "b28adf43-72d4-4444-943b-36f8e6b6cc5b": {
+      "route_id": "6",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "18cdc88a-39a3-42e3-9886-0e80b5c98bde": {
+      "route_id": "6",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "2304bd2e-1f0a-440b-8197-c67df429ce15": {
+      "route_id": "4",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "a3d36028-392f-4871-92c0-243c4d1a2e69": {
+      "route_id": "4",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "5e8b3720-d86d-4b9c-8999-fa6d127caf9a": {
+      "route_id": "9",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "6aa63b3a-8de3-41b2-8fae-4a4290985a30": {
+      "route_id": "9",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "ee5d79c1-3b3b-4dd3-a1ad-d00a34aba3e5": {
+      "route_id": "2",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "6a1d7667-1243-4d63-8824-9057321b8d0d": {
+      "route_id": "GA1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "db4cf6ee-62e8-407a-9145-6790903e6d95": {
+      "route_id": "7",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "8b3afc52-4075-4a5e-9e7e-c89d7bfc6265": {
+      "route_id": "1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "ccec26a5-d3b6-4713-95e0-1162ca951126": {
+      "route_id": "1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "9e1b008a-845e-42ad-a405-2400d86d93cf": {
+      "route_id": "7",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "0bf617a8-5e13-4ffb-9eef-cc085beb2188": {
+      "route_id": "GA1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "d54d9af3-e736-48af-81d9-823e94a71ab4": {
+      "route_id": "2",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "4bd97748-eb6e-466d-9d4b-bd640a43d28b": {
+      "route_id": "9",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "da56f8bf-94cb-4e98-9152-082809b113f2": {
+      "route_id": "4",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "829fe46d-5189-4fcf-be63-184dd0583d30": {
+      "route_id": "6",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "b0933150-e73b-4c32-bb1f-6229813e53a9": {
+      "route_id": "6",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "65e6706a-bf22-4d06-9d23-6b5a18323bac": {
+      "route_id": "4",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "2ae86a0d-744d-4f31-89e4-d49ea97782a5": {
+      "route_id": "9",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "321a2624-e61b-472c-9ab3-16184ec88483": {
+      "route_id": "2",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "3917a9bb-3a7d-4779-bab9-f51c8faa8ff3": {
+      "route_id": "GA1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "c775813f-9787-4f02-858c-21e7c61893df": {
+      "route_id": "7",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "37162622-6d0d-4f7f-86a9-56abac76cec3": {
+      "route_id": "1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "84fbb8e9-3eec-4de1-a7d5-958a93eb9fac": {
+      "route_id": "3",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "61ea141f-87e8-43ce-bb18-4dba0e85c3f1": {
+      "route_id": "1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "a69a677b-c712-44ad-ba6c-9d78d8d42887": {
+      "route_id": "7",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "e9bd5d22-39c6-4146-9edf-faa936e923ec": {
+      "route_id": "GA1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 111,
+      "canceled": false
+    },
+    "53df7fd9-7d23-4282-a627-aef52d204105": {
+      "route_id": "2",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 19,
+      "canceled": false
+    },
+    "317ea1d9-5c29-4886-a2e9-061e9925e485": {
+      "route_id": "4",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "dfda0eba-5047-4aa0-a5a5-1a049b1cf414": {
+      "route_id": "9",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "17e0273f-724c-40d7-953e-da4ae8fffc33": {
+      "route_id": "4",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "22ac0756-23cf-4576-9577-e34c50c000d2": {
+      "route_id": "6",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "32fe08be-c075-4cd0-b959-a6c281f23d76": {
+      "route_id": "6",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "6459485c-3ad2-4fde-89c5-3598fe1bf715": {
+      "route_id": "9",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "4ca52af4-8843-4321-9a12-17feaa4b75a2": {
+      "route_id": "5",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "948cc64c-4403-49fc-a708-15cfc2cf81da": {
+      "route_id": "3",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "0e98e46b-a6e6-41bc-90b1-0983eb5b18a5": {
+      "route_id": "2",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "55c98c25-2b1c-41e4-9c4d-157950f2f37c": {
+      "route_id": "GA1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "3e8018ea-698f-4743-842b-00817a8f1875": {
+      "route_id": "7",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 203,
+      "canceled": false
+    },
+    "69e0dc1c-bcae-4ca2-9ea0-b736998c620d": {
+      "route_id": "1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 24,
+      "canceled": false
+    },
+    "8f30798f-851a-4314-a45b-a2836ddf8b99": {
+      "route_id": "5",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "83521ee1-113e-4b02-a92c-88a723aca920": {
+      "route_id": "3",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "01e7709f-33ed-469c-9072-9e82dfd7a015": {
+      "route_id": "1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 85,
+      "canceled": false
+    },
+    "aaa30e07-cad2-4445-9ab7-e0ff43d3a963": {
+      "route_id": "7",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 589,
+      "canceled": false
+    },
+    "c7bf2406-355e-4845-986f-4587cc407abf": {
+      "route_id": "GA1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 222,
+      "canceled": false
+    },
+    "771ed189-d548-40f4-ae3f-6eb63341b75b": {
+      "route_id": "2",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 368,
+      "canceled": false
+    },
+    "e4cb2d3a-02f9-4f03-a507-a821a0fda758": {
+      "route_id": "6",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 36,
+      "canceled": false
+    },
+    "65d6d2c5-6f96-4f4b-a561-603464564112": {
+      "route_id": "9",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 137,
+      "canceled": false
+    },
+    "726d96bc-7c4c-43d9-a611-45784b29dad3": {
+      "route_id": "9",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 29,
+      "canceled": false
+    },
+    "1b5e74eb-956b-4106-9120-6d7238005aaa": {
+      "route_id": "6",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 21,
+      "canceled": false
+    },
+    "1ddbce4e-84eb-4bc4-8b4e-87390bdb9a4c": {
+      "route_id": "4",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 8,
+      "canceled": false
+    },
+    "b0c7d0d6-f92b-4fac-bd69-003b85dc507c": {
+      "route_id": "4",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 133,
+      "canceled": false
+    },
+    "2e800a64-8382-4e41-b77e-9881bbdabf5f": {
+      "route_id": "5",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "e26c2d05-f449-4a1f-989e-9252608c29f0": {
+      "route_id": "3",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 0,
+      "canceled": false
+    },
+    "a75a657d-c394-4345-afda-0c9313624e6f": {
+      "route_id": "2",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 42,
+      "canceled": false
+    },
+    "97c01894-462c-4082-b6bc-0aa7a699db20": {
+      "route_id": "GA1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 88,
+      "canceled": false
+    },
+    "a0edcff1-1c1f-42a7-bde5-d18e88951216": {
+      "route_id": "7",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 1495,
+      "canceled": false
+    },
+    "d45cea54-21ef-4bb2-802d-2f9af6e58714": {
+      "route_id": "1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 314,
+      "canceled": false
+    },
+    "3604e51f-4524-40b8-9cdd-5098eb830f4d": {
+      "route_id": "5",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 303,
+      "canceled": false
+    },
+    "e22be144-b73e-4833-9e5d-9c02dab353fc": {
+      "route_id": "3",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 17,
+      "canceled": false
+    },
+    "e980d744-a2ee-4d46-b678-f3354681aa2d": {
+      "route_id": "1",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 102,
+      "canceled": false
+    },
+    "088a24af-5760-4e53-9a7a-bf58c3845343": {
+      "route_id": "7",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 511,
+      "canceled": false
+    },
+    "76a6601c-56ee-44cc-8081-8f41ff97827f": {
+      "route_id": "5",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 990,
+      "canceled": false
+    },
+    "930eda85-037b-42c4-a01c-fddca64788c6": {
+      "route_id": "7",
+      "first_seen": "2026-09-02T19:32:36.538869+00:00",
+      "last_seen": "2026-09-02T19:32:36.538869+00:00",
+      "max_delay": 2550,
+      "canceled": false
+    }
+  }
+}

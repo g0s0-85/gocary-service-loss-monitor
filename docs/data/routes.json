@@ -1,0 +1,39 @@
+{
+  "_fetched_at": "2026-09-02T19:32:35.426103+00:00",
+  "1717": {
+    "short_name": "1",
+    "long_name": "Crossroads"
+  },
+  "17645": {
+    "short_name": "ACX",
+    "long_name": "Apex - Cary Express"
+  },
+  "68233": {
+    "short_name": "GA1",
+    "long_name": "GoApex Route 1"
+  },
+  "1719": {
+    "short_name": "3",
+    "long_name": "Harrison"
+  },
+  "1720": {
+    "short_name": "4",
+    "long_name": "High House"
+  },
+  "1721": {
+    "short_name": "5",
+    "long_name": "Kildaire Farm"
+  },
+  "1722": {
+    "short_name": "6",
+    "long_name": "Buck Jones"
+  },
+  "17643": {
+    "short_name": "7",
+    "long_name": "Weston"
+  },
+  "17644": {
+    "short_name": "8",
+    "long_name": "Cary Parkway"
+  }
+}
