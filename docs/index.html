@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GoCary Service Loss Monitor</title>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --card: #ffffff;
+    --border: #e2e4e9;
+    --text: #1c1e21;
+    --muted: #6b7280;
+    --canceled: #c62828;
+    --no_show: #7c3aed;
+    --severe_delay: #b45309;
+    --route_gap: #c62828;
+    --resolved: #1a7f37;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    padding: 20px 24px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  header h1 { font-size: 18px; margin: 0; }
+  header p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+  #status { font-size: 13px; color: var(--muted); text-align: right; }
+  main { max-width: 1000px; margin: 24px auto; padding: 0 16px 60px; }
+  h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin: 28px 0 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; }
+  .empty { text-align: center; color: var(--muted); padding: 40px 20px; }
+
+  #gap-banner {
+    display: none;
+    background: #fdecea;
+    border: 1px solid var(--canceled);
+    color: #7f1d1d;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  #gap-banner b { display: block; margin-bottom: 6px; font-size: 13px; }
+  #gap-banner ul { margin: 0; padding-left: 18px; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; }
+  th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
+  th.sortable:hover { color: var(--text); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: none; }
+
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 999px;
+    font-size: 11px; font-weight: 600; color: #fff; white-space: nowrap;
+  }
+  .badge.canceled { background: var(--canceled); }
+  .badge.no_show { background: var(--no_show); }
+  .badge.severe_delay { background: var(--severe_delay); }
+  .badge.route_gap { background: var(--route_gap); }
+  .badge.resolved { background: var(--resolved); }
+
+  .table-toolbar { padding: 10px 12px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .table-toolbar select, .table-toolbar input {
+    padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px;
+  }
+  .table-toolbar .count { font-size: 12px; color: var(--muted); white-space: nowrap; margin-left: auto; }
+  .scroll-body { max-height: 480px; overflow-y: auto; }
+  .scroll-body thead th { position: sticky; top: 0; background: var(--card); }
+  td.detail { color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>GoCary Service Loss Monitor</h1>
+    <p>Automated cancellation / no-show / delay / coverage-gap detection from
+      <a href="https://www.gocarylive.org/" target="_blank" rel="noopener">gocarylive.org</a>'s GTFS-RT feed</p>
+  </div>
+  <div id="status">loading status…</div>
+</header>
+<main>
+  <div id="gap-banner"></div>
+
+  <h2>Events</h2>
+  <div id="events" class="card">
+    <div class="table-toolbar">
+      <select id="date-select"><option>loading…</option></select>
+      <select id="type-filter">
+        <option value="">All types</option>
+        <option value="canceled">Canceled</option>
+        <option value="no_show">No-show</option>
+        <option value="severe_delay">Severe delay</option>
+        <option value="route_gap">Route gap</option>
+      </select>
+      <span class="count" id="event-count"></span>
+    </div>
+    <div class="scroll-body"><div id="event-table"><div class="empty">Loading…</div></div></div>
+  </div>
+
+  <h2>Last 14 days</h2>
+  <div id="trend" class="card"><div class="empty">Loading…</div></div>
+</main>
+
+<script>
+function escSafe(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function fmtSeconds(s) {
+  if (s === null || s === undefined) return '';
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+}
+
+function fmtTime(iso) {
+  if (!iso) return '';
+  return new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+const TYPE_LABEL = { canceled: 'Canceled', no_show: 'No-show', severe_delay: 'Severe delay', route_gap: 'Route gap' };
+
+// Same resilient fetch pattern as gocary-transit-dashboard: the GitHub
+// Contents API caches for only 60s (vs. Pages' 10-minute CDN cache that
+// ignores query strings), so try it first and fall back to the Pages-served
+// copy if it fails, e.g. its 60-requests/hour unauthenticated rate limit.
+const REPO = 'g0s0-85/gocary-service-loss-monitor';
+const BRANCH = 'main';
+
+async function fetchText(apiPath, pagesPath) {
+  try {
+    const url = `https://api.github.com/repos/${REPO}/contents/${apiPath}?ref=${BRANCH}`;
+    const res = await fetch(url, { headers: { Accept: 'application/vnd.github.raw' } });
+    if (res.ok) return await res.text();
+  } catch {}
+  try {
+    const res = await fetch(pagesPath + '?t=' + Date.now());
+    if (res.ok) return await res.text();
+  } catch {}
+  return null;
+}
+
+async function fetchJson(apiPath, pagesPath) {
+  const text = await fetchText(apiPath, pagesPath);
+  if (text === null) return null;
+  try { return JSON.parse(text); } catch { return null; }
+}
+
+function renderStatus(status) {
+  const el = document.getElementById('status');
+  if (!status || !status.last_polled) {
+    el.textContent = 'not polled yet';
+    return;
+  }
+  if (status.last_error) {
+    el.innerHTML = `<span style="color:#c62828">last poll errored: ${escSafe(status.last_error)}</span>`;
+  } else {
+    el.textContent = `last polled ${new Date(status.last_polled).toLocaleString()} · ` +
+      `${status.events_today ?? 0} event(s) today · ${status.open_route_gaps ?? 0} open gap(s)`;
+  }
+}
+
+function renderGapBanner(active) {
+  const el = document.getElementById('gap-banner');
+  const gaps = active?.open_route_gaps || [];
+  if (!gaps.length) { el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  el.innerHTML = `<b>${gaps.length} route${gaps.length === 1 ? '' : 's'} currently showing a coverage gap</b>` +
+    `<ul>${gaps.map(g => `<li>Route ${escSafe(g.route_short_name)} — no vehicle activity since ${fmtTime(g.detected_at)}</li>`).join('')}</ul>`;
+}
+
+let allEvents = [];
+
+function renderEventDetail(e) {
+  if (e.type === 'severe_delay') return `${Math.round(e.delay_seconds / 60)} min late`;
+  if (e.type === 'no_show') return `scheduled ${fmtSeconds(e.scheduled_start_s)}–${fmtSeconds(e.scheduled_end_s)}`;
+  if (e.type === 'route_gap') return e.resolved_at ? `resolved ${fmtTime(e.resolved_at)}` : 'still open';
+  return '';
+}
+
+function renderEventTable() {
+  const el = document.getElementById('event-table');
+  const countEl = document.getElementById('event-count');
+  const typeFilter = document.getElementById('type-filter').value;
+
+  let rows = allEvents;
+  if (typeFilter) rows = rows.filter(e => e.type === typeFilter);
+  rows = rows.slice().sort((a, b) => (b.detected_at || '').localeCompare(a.detected_at || ''));
+  countEl.textContent = `${rows.length} of ${allEvents.length} events`;
+
+  if (!rows.length) {
+    el.innerHTML = '<div class="empty">No events for this day.</div>';
+    return;
+  }
+  el.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Time</th><th>Type</th><th>Route</th><th>Trip</th><th>Detail</th>
+      </tr></thead>
+      <tbody>
+        ${rows.map(e => `
+          <tr>
+            <td>${fmtTime(e.detected_at)}</td>
+            <td><span class="badge ${escSafe(e.type)}">${escSafe(TYPE_LABEL[e.type] || e.type)}</span>${e.type === 'route_gap' && e.resolved_at ? ' <span class="badge resolved">resolved</span>' : ''}</td>
+            <td>${escSafe(e.route_short_name)}</td>
+            <td class="detail">${escSafe(e.trip_id || '—')}</td>
+            <td class="detail">${escSafe(renderEventDetail(e))}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+async function loadDay(date) {
+  const day = await fetchJson(`docs/data/events/${date}.json`, `data/events/${date}.json`);
+  allEvents = day?.events || [];
+  renderEventTable();
+}
+
+async function loadDateSelect() {
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+  const index = await fetchJson('docs/data/events/index.json', 'data/events/index.json');
+  let dates = (index?.dates || []).slice().sort().reverse();
+  if (!dates.includes(todayStr)) dates = [todayStr, ...dates];
+
+  const sel = document.getElementById('date-select');
+  sel.innerHTML = dates.map(d => `<option value="${d}">${d}${d === todayStr ? ' (today)' : ''}</option>`).join('');
+  sel.value = todayStr;
+  sel.addEventListener('change', () => loadDay(sel.value));
+  await loadDay(todayStr);
+  return dates;
+}
+
+const TREND_TYPES = ['canceled', 'no_show', 'severe_delay', 'route_gap'];
+const TREND_WINDOW_DAYS = 14;
+const CACHE_PREFIX = 'gocary-events:';
+
+async function fetchDayCached(date, todayStr) {
+  if (date !== todayStr) {
+    try {
+      const cached = localStorage.getItem(CACHE_PREFIX + date);
+      if (cached) return JSON.parse(cached);
+    } catch {}
+  }
+  const data = await fetchJson(`docs/data/events/${date}.json`, `data/events/${date}.json`);
+  if (data && date !== todayStr) {
+    try { localStorage.setItem(CACHE_PREFIX + date, JSON.stringify(data)); } catch {}
+  }
+  return data;
+}
+
+async function loadTrend(dates) {
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+  const recent = dates.slice(0, TREND_WINDOW_DAYS);
+  const days = await Promise.all(recent.map(d => fetchDayCached(d, todayStr)));
+  const el = document.getElementById('trend');
+
+  const rows = recent.map((date, i) => {
+    const events = days[i]?.events || [];
+    const counts = { canceled: 0, no_show: 0, severe_delay: 0, route_gap: 0 };
+    for (const e of events) if (counts[e.type] !== undefined) counts[e.type]++;
+    return { date, ...counts, total: events.length };
+  }).filter(r => r.total > 0 || r.date === todayStr);
+
+  if (!rows.length) {
+    el.innerHTML = '<div class="empty">No events recorded yet.</div>';
+    return;
+  }
+  el.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Date</th>
+        <th class="num">Canceled</th><th class="num">No-show</th>
+        <th class="num">Severe delay</th><th class="num">Route gap</th>
+        <th class="num">Total</th>
+      </tr></thead>
+      <tbody>
+        ${rows.map(r => `
+          <tr>
+            <td>${r.date}</td>
+            <td class="num">${r.canceled || ''}</td>
+            <td class="num">${r.no_show || ''}</td>
+            <td class="num">${r.severe_delay || ''}</td>
+            <td class="num">${r.route_gap || ''}</td>
+            <td class="num">${r.total}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+async function refreshLive() {
+  const [status, active] = await Promise.all([
+    fetchJson('docs/data/status.json', 'data/status.json'),
+    fetchJson('docs/data/live/active_events.json', 'data/live/active_events.json'),
+  ]);
+  renderStatus(status);
+  renderGapBanner(active);
+}
+
+document.getElementById('type-filter').addEventListener('change', renderEventTable);
+
+(async () => {
+  await refreshLive();
+  const dates = await loadDateSelect();
+  await loadTrend(dates);
+  setInterval(refreshLive, 60000);
+})();
+</script>
+</body>
+</html>

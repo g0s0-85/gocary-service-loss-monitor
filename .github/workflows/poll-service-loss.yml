@@ -1,0 +1,50 @@
+name: Poll GoCary Service Loss
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: poll-service-loss
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Poll feeds and detect service loss
+        env:
+          SERVICE_LOSS_WEBHOOK_URL: ${{ secrets.SERVICE_LOSS_WEBHOOK_URL }}
+        run: python scripts/poll_service_loss.py
+
+      - name: Commit changes if any
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data
+          git diff --cached --quiet && exit 0
+          git commit -m "Poll service loss feeds $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          for i in 1 2 3 4 5; do
+            git rebase --abort 2>/dev/null || true
+            git pull --rebase && git push && exit 0
+            echo "Push attempt $i failed, retrying..."
+            sleep $((RANDOM % 5 + 1))
+          done
+          # Same reasoning as gocary-transit-dashboard's poller: a genuine
+          # content conflict here just means this one snapshot is dropped in
+          # favor of the next poll's, which is self-healing -- surface it as
+          # a visible annotation rather than a failing run.
+          echo "::warning::Could not publish this poll after 5 attempts (real content conflict, not a simple race) -- dropping this snapshot; the next poll will supersede it."
+          git rebase --abort 2>/dev/null || true
+          exit 0
