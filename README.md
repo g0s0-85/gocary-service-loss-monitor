@@ -24,7 +24,11 @@ GitHub Actions poller commits JSON under `docs/data/`, and a static
   a shortfall is flagged against the earliest unmatched scheduled slot(s),
   assuming trips run in schedule order. The count is reliable; which exact
   slot it points at can be wrong if a vehicle skips a trip and runs a later
-  one on time instead.
+  one on time instead. **Suppressed entirely on the monitor's first day of
+  operation** (recorded as `first_run_date` in `status.json`) — a partial
+  day always looks like a deficit against the full day's schedule for
+  reasons that have nothing to do with real service loss. It activates
+  automatically starting the next service day.
 - **Severe delay** — a trip that did run, but fell more than 20 minutes
   behind its predicted schedule — a rider-facing miss even though the trip
   technically operated. (This is a different, stricter threshold than
@@ -39,6 +43,36 @@ All four thresholds are constants at the top of `scripts/poll_service_loss.py`
 (`SEVERE_DELAY_S`, `NO_SHOW_GRACE_S`, `ROUTE_GAP_S`) — adjust them there if
 GoCary's operational definition of "lost service" differs from these
 defaults.
+
+**On the static GTFS's staleness:** the Trillium mirror this project (and
+gocary-transit-dashboard) pulls from has a `calendar.txt` whose
+`start_date`/`end_date` ranges only run through 2024-12-31 — every
+service_id's validity window is already expired relative to the current
+date. Worse, the feed contains two full back-to-back *generations* of the
+same calendar under different service_ids ("October 2023" and "2024")
+whose `trips.txt` row counts match exactly per weekday pattern — GoCary
+re-published an unchanged schedule under new service_ids rather than
+editing the old ones. `active_service_ids()` in
+`scripts/poll_service_loss.py` handles both: it only considers the single
+most recent generation (by `end_date`) and matches day-of-week within it,
+ignoring the expired range. This also means `calendar_dates.txt` holiday
+exceptions (also all 2024-dated) won't apply — if GoCary/Trillium ever
+publish a fresher mirror, that exception logic starts working again
+automatically with no code change needed.
+
+**On the initial deploy (2026-09-02):** `docs/data/live/seen_trips.json` and
+`route_activity.json` were seeded with real trip sightings reconstructed
+from gocary-transit-dashboard's git history (that project had already been
+polling the same feed for several hours before this one existed) — sampled
+every ~2 minutes across the day and merged in without overwriting anything
+this project's own poller had already recorded live. This is a one-time
+backfill, not an ongoing mechanism; it only exists to give day-one detection
+a fuller picture instead of a cold start. Today's `no_show` detection is
+still suppressed regardless, per the note above — the backfill reduced the
+apparent deficit substantially (e.g. one route went from a 95-trip shortfall
+down to 17 once genuinely observed trips were accounted for) but couldn't
+fully explain it, and rather than guess at the remainder it's left for a
+clean first full day of live monitoring instead.
 
 ## How it works
 

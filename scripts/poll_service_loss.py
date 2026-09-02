@@ -9,7 +9,11 @@ dispatch logs:
                   the number of that route's scheduled trips whose window has
                   fully closed -- see detect_events()'s no_show section for why
                   this is a route-level headcount rather than matching specific
-                  trip_ids (GoCary's RT and static feeds don't share an id)
+                  trip_ids (GoCary's RT and static feeds don't share an id).
+                  Suppressed entirely on the monitor's first day of operation
+                  (status.json's first_run_date) since a partial day always
+                  looks like a deficit for reasons that have nothing to do
+                  with real service loss -- see main()/detect_events().
   - severe_delay -- a trip that did run, but fell so far behind (>20 min) that
                   it's effectively a missed connection for anyone relying on it
   - route_gap  -- a route that should have live coverage right now (it has a
@@ -232,12 +236,32 @@ def ensure_static_data():
 
 
 def active_service_ids(calendar, calendar_dates, date_obj):
+    """GoCary's mirrored static GTFS calendar.txt only has start_date/
+    end_date ranges through 2024-12-31 (confirmed by inspecting the
+    downloaded zip directly) -- every service_id's date range has already
+    expired relative to any date in 2025+, staler than the sibling
+    dashboard project's already-documented stop-roster staleness. Worse,
+    the feed contains two full back-to-back *generations* of the same
+    calendar under different service_ids ("October 2023" and "2024") whose
+    trips.txt row counts match exactly per weekday pattern (confirmed:
+    310/310, 168/168, 69/69, 59/59, 16/16) -- GoCary re-published an
+    unchanged schedule under new service_ids rather than editing the old
+    ones. Matching on day-of-week alone (ignoring the expired date range)
+    would therefore double-count every trip, once per generation. The fix:
+    only consider the single most recent generation (the one with the
+    latest end_date) and match day-of-week within it -- that both survives
+    the expired date range and avoids the duplicate-generation double
+    count. calendar_dates.txt's exceptions are also all 2024-dated in this
+    mirror, so holiday-specific overrides are effectively inert until
+    GoCary/Trillium publish a fresher feed -- not fixable from this side,
+    but the matching logic below is left in place so it starts working
+    again automatically whenever that happens."""
+    if not calendar:
+        return set()
+    latest_end = max(c["end_date"] for c in calendar.values())
     date_str = date_obj.strftime("%Y%m%d")
     day_key = DAY_KEYS[date_obj.weekday()]
-    active = set()
-    for sid, c in calendar.items():
-        if c["start_date"] <= date_str <= c["end_date"] and c.get(day_key):
-            active.add(sid)
+    active = {sid for sid, c in calendar.items() if c["end_date"] == latest_end and c.get(day_key)}
     for key, extype in calendar_dates.items():
         sid, d = key.split("|", 1)
         if d != date_str:
@@ -315,7 +339,7 @@ def route_name(routes, route_id):
     return routes.get(route_id, {}).get("short_name", route_id)
 
 
-def detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s):
+def detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s, first_run_date):
     path = EVENTS_DIR / f"{date}.json"
     day = load_json(path, {"date": date, "events": []})
     existing_ids = {e["id"] for e in day["events"]}
@@ -364,9 +388,22 @@ def detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s):
     # holds for GoCary's fixed routes but means a vehicle that skips an
     # earlier trip and later runs a later one on time can point at the
     # wrong slot even though the deficit count itself is still accurate.
+    # schedule.json's trips are keyed by the static GTFS's *internal* route_id
+    # (e.g. "1717"), but seen["trips"]/route_activity are keyed by whatever
+    # the RT feed calls route_id -- which is already the short rider-facing
+    # code (e.g. "7"), the same mismatch gocary-transit-dashboard documented
+    # for its own routes.json lookups. Translate every scheduled trip's
+    # route_id through routes.json's short_name up front so every comparison
+    # below is in the RT feed's namespace; a route the RT feed reports that
+    # isn't in the static snapshot at all (confirmed to happen for routes
+    # "2" and "9" -- GoCary has added routes since routes.txt was last
+    # mirrored) simply won't have any scheduled_today entries, so no_show
+    # and route_gap silently can't be evaluated for it -- no false positives,
+    # just no coverage, same degradation already accepted for route display.
     active_sids = active_service_ids(schedule.get("calendar", {}), schedule.get("calendar_dates", {}), now_dt.date())
     scheduled_today = {
-        tid: t for tid, t in schedule.get("trips", {}).items()
+        tid: {**t, "route_id": route_name(routes, t["route_id"])}
+        for tid, t in schedule.get("trips", {}).items()
         if t["service_id"] in active_sids
     }
     scheduled_by_route = {}
@@ -377,20 +414,29 @@ def detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s):
     for trip_id, rec in seen["trips"].items():
         observed_by_route.setdefault(rec["route_id"], []).append(rec["first_seen"])
 
-    for route_id, trips in scheduled_by_route.items():
-        trips = sorted(trips, key=lambda t: t["start_s"])
-        closed = [t for t in trips if t["end_s"] + NO_SHOW_GRACE_S < now_s]
-        observed_count = len(observed_by_route.get(route_id, []))
-        if observed_count >= len(closed):
-            continue
-        for info in closed[observed_count:]:
-            add({
-                "id": f"no_show:{route_id}:{info['start_s']}", "type": "no_show", "trip_id": None,
-                "route_id": route_id, "route_short_name": route_name(routes, route_id),
-                "scheduled_start_s": info["start_s"], "scheduled_end_s": info["end_s"],
-                "detected_at": now_iso(), "resolved_at": None,
-                "delay_seconds": None, "alerted": False,
-            })
+    # The monitor's first day of operation starts partway through the
+    # service day (whenever it's first deployed), so "scheduled" always
+    # covers the whole day from midnight while "observed" only covers
+    # however much of the day has been polled so far -- guaranteeing a
+    # fake deficit on every route for reasons that have nothing to do with
+    # real service loss. Skip no_show scoring entirely for that first day;
+    # it activates automatically starting the next service day, once
+    # seen_trips.json has been built up from midnight by the poller itself.
+    if date != first_run_date:
+        for route_id, trips in scheduled_by_route.items():
+            trips = sorted(trips, key=lambda t: t["start_s"])
+            closed = [t for t in trips if t["end_s"] + NO_SHOW_GRACE_S < now_s]
+            observed_count = len(observed_by_route.get(route_id, []))
+            if observed_count >= len(closed):
+                continue
+            for info in closed[observed_count:]:
+                add({
+                    "id": f"no_show:{route_id}:{info['start_s']}", "type": "no_show", "trip_id": None,
+                    "route_id": route_id, "route_short_name": route_name(routes, route_id),
+                    "scheduled_start_s": info["start_s"], "scheduled_end_s": info["end_s"],
+                    "detected_at": now_iso(), "resolved_at": None,
+                    "delay_seconds": None, "alerted": False,
+                })
 
     # route_gap: routes that should have coverage right now but don't
     routes_active_now = {t["route_id"] for t in scheduled_today.values() if t["start_s"] <= now_s <= t["end_s"]}
@@ -486,6 +532,8 @@ def write_active_events(date, day):
 
 def main():
     status = load_json(STATUS_FILE, {"last_polled": None, "last_error": None, "polls_run": 0})
+    if "first_run_date" not in status:
+        status["first_run_date"] = now_service_dt().date().isoformat()
 
     try:
         schedule, routes = ensure_static_data()
@@ -497,7 +545,8 @@ def main():
         now_s = seconds_since_service_midnight(now_dt)
 
         seen, route_activity = poll_seen(tu_feed, vp_feed, date)
-        day, new_events, resolved_events = detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s)
+        day, new_events, resolved_events = detect_events(
+            date, seen, route_activity, schedule, routes, now_dt, now_s, status["first_run_date"])
         alert_and_mark(day, new_events, resolved_events, date)
         write_events_index()
         write_active_events(date, day)
