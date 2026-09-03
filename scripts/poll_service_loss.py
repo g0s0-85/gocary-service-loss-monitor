@@ -94,6 +94,7 @@ LIVE_DIR = DATA_DIR / "live"
 EVENTS_DIR = DATA_DIR / "events"
 SCHEDULE_FILE = DATA_DIR / "schedule.json"
 ROUTES_FILE = DATA_DIR / "routes.json"
+ROUTE_STOPS_FILE = DATA_DIR / "route_stops.json"
 STATUS_FILE = DATA_DIR / "status.json"
 SEEN_FILE = LIVE_DIR / "seen_trips.json"
 ROUTE_ACTIVITY_FILE = LIVE_DIR / "route_activity.json"
@@ -142,14 +143,17 @@ def hms_to_seconds(hms):
 
 
 def ensure_static_data():
-    """Refresh routes.json / schedule.json from GoCary's static GTFS if
-    schedule.json is missing or older than a week -- same once-a-week
-    cadence as gocary-transit-dashboard, since route/trip metadata barely
-    ever changes. schedule.json caches, per trip_id, the (route_id,
-    service_id, start_s, end_s) needed to know which trips *should* be
-    running right now without re-downloading the zip on every poll. If a
-    refresh fails, keep whatever was already cached rather than failing the
-    whole run."""
+    """Refresh routes.json / schedule.json / route_stops.json from GoCary's
+    static GTFS if schedule.json is missing or older than a week -- same
+    once-a-week cadence as gocary-transit-dashboard, since route/trip/stop
+    metadata barely ever changes. schedule.json caches, per trip_id, the
+    (route_id, service_id, start_s, end_s) needed to know which trips
+    *should* be running right now without re-downloading the zip on every
+    poll. route_stops.json caches each route's stop coordinates (RT-style
+    route_id keys) so the dashboard can approximate "where" for event types
+    that have no real vehicle position (no_show, route_gap) by highlighting
+    the route's stops rather than a fake precise pin. If a refresh fails,
+    keep whatever was already cached rather than failing the whole run."""
     existing_schedule = load_json(SCHEDULE_FILE, None)
     if existing_schedule is not None:
         fetched_at = existing_schedule.get("_fetched_at")
@@ -180,10 +184,26 @@ def ensure_static_data():
                 for row in reader
             }
 
+        stops_by_id = {}
+        with zf.open("stops.txt") as f:
+            reader = csv.DictReader(io.TextIOWrapper(f, encoding="utf-8-sig"))
+            for row in reader:
+                if not row.get("stop_lat") or not row.get("stop_lon"):
+                    continue
+                stops_by_id[row["stop_id"]] = {
+                    "name": row.get("stop_name") or row["stop_id"],
+                    "lat": float(row["stop_lat"]),
+                    "lon": float(row["stop_lon"]),
+                }
+
         # stop_times.txt isn't guaranteed sorted by stop_sequence, so instead
         # of trusting "first row = start / last row = end", track the min and
         # max of each row's own arrival/departure across every row for that
         # trip -- that gives the same envelope regardless of row order.
+        # Also collect, per (internal) route_id, the set of stops it serves
+        # -- this is what lets the dashboard highlight "roughly where" for
+        # no_show/route_gap events, which have no real vehicle position.
+        route_stop_ids = {}
         with zf.open("stop_times.txt") as f:
             reader = csv.DictReader(io.TextIOWrapper(f, encoding="utf-8-sig"))
             for row in reader:
@@ -203,8 +223,22 @@ def ensure_static_data():
                     trip["start_s"] = lo
                 if "end_s" not in trip or hi > trip["end_s"]:
                     trip["end_s"] = hi
+                if row.get("stop_id"):
+                    route_stop_ids.setdefault(trip["route_id"], set()).add(row["stop_id"])
 
         trips = {tid: t for tid, t in trips.items() if "start_s" in t and "end_s" in t}
+
+        # route_stop_ids is keyed by the static feed's internal route_id;
+        # translate to the RT feed's short_name here (same mismatch
+        # documented throughout this file) so the dashboard can key
+        # route_stops.json the same way it already keys everything else
+        # from the live feed.
+        route_stops = {}
+        for internal_route_id, stop_ids in route_stop_ids.items():
+            short_name = routes.get(internal_route_id, {}).get("short_name", internal_route_id)
+            coords = [stops_by_id[sid] for sid in stop_ids if sid in stops_by_id]
+            if coords:
+                route_stops.setdefault(short_name, []).extend(coords)
 
         calendar = {}
         try:
@@ -236,9 +270,10 @@ def ensure_static_data():
         }
         save_json(SCHEDULE_FILE, schedule)
         save_json(ROUTES_FILE, routes)
+        save_json(ROUTE_STOPS_FILE, route_stops)
         return schedule, routes
     except Exception as exc:
-        print(f"Warning: failed to refresh schedule/routes ({exc}); keeping existing copy")
+        print(f"Warning: failed to refresh schedule/routes/route_stops ({exc}); keeping existing copy")
         return (
             existing_schedule or {"_fetched_at": None, "trips": {}, "calendar": {}, "calendar_dates": {}},
             load_json(ROUTES_FILE, {}),
@@ -311,16 +346,21 @@ def poll_seen(tu_feed, vp_feed, date):
     route_activity = load_json(ROUTE_ACTIVITY_FILE, {})
     ts = now_iso()
 
-    def touch(trip_id, route_id, delay=None, canceled=False):
+    def touch(trip_id, route_id, delay=None, canceled=False, vehicle_id=None, lat=None, lon=None):
         rec = seen["trips"].setdefault(trip_id, {
             "route_id": route_id, "first_seen": ts, "last_seen": ts,
             "max_delay": None, "canceled": False,
+            "vehicle_id": None, "lat": None, "lon": None,
         })
         rec["last_seen"] = ts
         if delay is not None:
             rec["max_delay"] = delay if rec["max_delay"] is None else max(rec["max_delay"], delay)
         if canceled:
             rec["canceled"] = True
+        if vehicle_id is not None:
+            rec["vehicle_id"] = vehicle_id
+        if lat is not None and lon is not None:
+            rec["lat"], rec["lon"] = lat, lon
         if route_id:
             route_activity[route_id] = ts
 
@@ -334,11 +374,21 @@ def poll_seen(tu_feed, vp_feed, date):
             canceled=(tu.trip.schedule_relationship == CANCELED),
         )
 
+    # VehiclePositions is the only feed that carries an actual bus number
+    # (vehicle.id, GoCary's own fleet numbering) and a live lat/lon -- this
+    # is what lets the dashboard plot "approximately where" a canceled or
+    # severe_delay event happened; TripUpdates alone has neither.
     for entity in vp_feed.entity:
         if not entity.HasField("vehicle") or not entity.vehicle.HasField("trip"):
             continue
         v = entity.vehicle
-        touch(v.trip.trip_id, v.trip.route_id, canceled=(v.trip.schedule_relationship == CANCELED))
+        touch(
+            v.trip.trip_id, v.trip.route_id,
+            canceled=(v.trip.schedule_relationship == CANCELED),
+            vehicle_id=(v.vehicle.id if v.HasField("vehicle") and v.vehicle.id else None),
+            lat=(v.position.latitude if v.HasField("position") else None),
+            lon=(v.position.longitude if v.HasField("position") else None),
+        )
 
     save_json(SEEN_FILE, seen)
     save_json(ROUTE_ACTIVITY_FILE, route_activity)
@@ -371,6 +421,7 @@ def detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s, f
                 "route_id": route_id, "route_short_name": route_name(routes, route_id),
                 "detected_at": now_iso(), "resolved_at": None,
                 "delay_seconds": rec["max_delay"], "alerted": False,
+                "vehicle_id": rec.get("vehicle_id"), "lat": rec.get("lat"), "lon": rec.get("lon"),
             })
         elif rec["max_delay"] is not None and rec["max_delay"] > SEVERE_DELAY_S:
             add({
@@ -378,6 +429,7 @@ def detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s, f
                 "route_id": route_id, "route_short_name": route_name(routes, route_id),
                 "detected_at": now_iso(), "resolved_at": None,
                 "delay_seconds": rec["max_delay"], "alerted": False,
+                "vehicle_id": rec.get("vehicle_id"), "lat": rec.get("lat"), "lon": rec.get("lon"),
             })
 
     # no_show: GoCary's RT feed assigns its own random trip_id (a UUID) that
@@ -500,14 +552,15 @@ def hms_label(seconds):
 
 def describe(event):
     route = event["route_short_name"]
+    vehicle_suffix = f" (bus {event['vehicle_id']})" if event.get("vehicle_id") else ""
     if event["type"] == "canceled":
-        return f":no_entry: Route {route} trip canceled (trip {event['trip_id']})"
+        return f":no_entry: Route {route} trip canceled{vehicle_suffix}"
     if event["type"] == "no_show":
         window = hms_label(event["scheduled_start_s"])
         return f":ghost: Route {route}'s trip scheduled around {window} likely never ran (fewer trips observed than scheduled)"
     if event["type"] == "severe_delay":
         mins = round(event["delay_seconds"] / 60)
-        return f":turtle: Route {route} trip running {mins} min late (trip {event['trip_id']})"
+        return f":turtle: Route {route} trip running {mins} min late{vehicle_suffix}"
     if event["type"] == "route_gap":
         return f":warning: Route {route} has had no vehicle activity for over {ROUTE_GAP_S // 60} min despite scheduled service"
     return f"Service loss event: {event}"

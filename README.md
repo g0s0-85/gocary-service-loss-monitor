@@ -44,6 +44,14 @@ All four thresholds are constants at the top of `scripts/poll_service_loss.py`
 GoCary's operational definition of "lost service" differs from these
 defaults.
 
+**Discontinued routes:** the static GTFS mirror still lists routes GoCary
+no longer actually runs (there's no "discontinued" flag in the data), which
+would otherwise show up as false `route_gap`/`no_show` events forever.
+`DISCONTINUED_ROUTES` in `scripts/poll_service_loss.py` is a manually
+maintained exclusion set — add a route's short name there (confirmed
+directly by Mark, same as `ACX` and `8` already are) if this ever flags one
+that's genuinely retired.
+
 **On the static GTFS's staleness:** the Trillium mirror this project (and
 gocary-transit-dashboard) pulls from has a `calendar.txt` whose
 `start_date`/`end_date` ranges only run through 2024-12-31 — every
@@ -96,8 +104,21 @@ clean first full day of live monitoring instead.
     weekly from GoCary's static GTFS zip. This is what "no-show" and "route
     gap" are measured against — without it there's no way to know what
     *should* be running right now.
+  - `docs/data/route_stops.json` — each route's stop coordinates (also
+    refreshed weekly), used by the dashboard's map to show "roughly where"
+    a `no_show`/`route_gap` event happened by highlighting the affected
+    route's stops, since those event types have no real vehicle to point to.
   - `docs/data/status.json` — last poll time, error (if any), poll count,
     today's event count, currently-open gap count.
+
+  **On event locations:** `canceled` and `severe_delay` events carry the
+  trip's last-known `vehicle_id` (GoCary's own bus number) and `lat`/`lon`,
+  captured from VehiclePositions the moment the event fires — this is a
+  real position, not an approximation, and is what the dashboard's map
+  plots as a pin. It can be `null` if VehiclePositions never reported a
+  position for that trip (e.g. a trip canceled before ever appearing with
+  one) — the dashboard shows those as "no captured location" rather than
+  guessing. Events logged before this feature existed also won't have it.
 
   **On dedup:** each event gets a stable id (`{type}:{trip_id}`, or
   `{type}:{route_id}:{opened_at}` for route gaps) so re-running detection
@@ -125,10 +146,13 @@ clean first full day of live monitoring instead.
   checks only need to notice something within their grace periods, not
   instantly.
 - **`docs/index.html`** — a static dashboard (no backend): a banner for any
-  currently-open route gaps, a filterable event table (defaults to today,
-  pick any past date from the dropdown), and a 14-day trend table of event
-  counts by type. Same Contents-API-first-then-Pages-fallback data loading
-  as gocary-transit-dashboard.
+  currently-open route gaps, a filterable/rangeable event table (presets for
+  Today/3/7/30 days/All time, or a custom from–to datetime range), a Leaflet
+  map of the same filtered events (real bus-position pins for
+  canceled/severe_delay, affected-route stop highlights for no_show/
+  route_gap), and a 14-day trend table of event counts by type. Same
+  Contents-API-first-then-Pages-fallback data loading as
+  gocary-transit-dashboard.
 
 ## One-time setup
 
@@ -176,4 +200,6 @@ clean first full day of live monitoring instead.
 - **Poll frequency**: change the cron-job.org schedule.
 - **Detection thresholds**: `SEVERE_DELAY_S` / `NO_SHOW_GRACE_S` /
   `ROUTE_GAP_S` in `scripts/poll_service_loss.py`.
+- **Discontinued routes**: `DISCONTINUED_ROUTES` in
+  `scripts/poll_service_loss.py`.
 - **Alerts**: add/remove/rotate the `SERVICE_LOSS_WEBHOOK_URL` secret.

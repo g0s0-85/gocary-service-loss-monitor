@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GoCary Service Loss Monitor</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
   :root {
     --bg: #f5f6f8;
@@ -82,6 +83,15 @@
   .scroll-body { max-height: 480px; overflow-y: auto; }
   .scroll-body thead th { position: sticky; top: 0; background: var(--card); }
   td.detail { color: var(--muted); font-size: 12px; }
+
+  #event-map { height: 380px; border-radius: 10px; }
+  .map-note { padding: 8px 12px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
+  .legend { display: flex; gap: 16px; font-size: 12px; color: var(--muted); margin: 10px 2px 0; flex-wrap: wrap; }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .dot.canceled { background: var(--canceled); }
+  .dot.severe_delay { background: var(--severe_delay); }
+  .dot.route-stop { background: var(--no_show); width: 6px; height: 6px; }
 </style>
 </head>
 <body>
@@ -122,10 +132,22 @@
     <div class="scroll-body"><div id="event-table"><div class="empty">Loading…</div></div></div>
   </div>
 
+  <h2>Map</h2>
+  <div id="event-map-card" class="card">
+    <div id="event-map"></div>
+    <div class="map-note" id="map-note"></div>
+  </div>
+  <div class="legend">
+    <span><i class="dot canceled"></i>canceled trip (bus location)</span>
+    <span><i class="dot severe_delay"></i>severe delay (bus location)</span>
+    <span><i class="dot route-stop"></i>route possibly affected by no-show/gap (stop locations, not a precise incident)</span>
+  </div>
+
   <h2>Last 14 days</h2>
   <div id="trend" class="card"><div class="empty">Loading…</div></div>
 </main>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 function escSafe(s) {
   if (s === null || s === undefined) return '';
@@ -202,6 +224,83 @@ function renderGapBanner(active) {
     `<ul>${gaps.map(g => `<li>Route ${escSafe(g.route_short_name)} — no vehicle activity since ${fmtTime(g.detected_at)}</li>`).join('')}</ul>`;
 }
 
+let map, vehicleLayer, routeStopLayer;
+let routeStops = {};
+
+function initEventMap() {
+  map = L.map('event-map').setView([35.7915, -78.7811], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 19,
+  }).addTo(map);
+  vehicleLayer = L.layerGroup().addTo(map);
+  routeStopLayer = L.layerGroup().addTo(map);
+}
+
+async function loadRouteStops() {
+  routeStops = await fetchJson('docs/data/route_stops.json', 'data/route_stops.json') || {};
+}
+
+const MAP_COLOR = { canceled: '#c62828', severe_delay: '#b45309' };
+
+// canceled/severe_delay carry a real captured bus position (see
+// poll_service_loss.py's poll_seen()) -- plot those as an actual pin.
+// no_show/route_gap have no vehicle to point to (that's the whole
+// premise of a no-show), so the best available "where" is the affected
+// route's own stops, shown as small dots rather than a fake precise
+// incident marker.
+function renderEventMap(rows) {
+  vehicleLayer.clearLayers();
+  routeStopLayer.clearLayers();
+
+  let plotted = 0, missingLocation = 0;
+  const affectedRoutes = new Set();
+
+  for (const e of rows) {
+    if (e.type === 'canceled' || e.type === 'severe_delay') {
+      if (e.lat != null && e.lon != null) {
+        const marker = L.circleMarker([e.lat, e.lon], {
+          radius: 7, color: '#fff', weight: 2, fillColor: MAP_COLOR[e.type], fillOpacity: 1,
+        });
+        const vehicleTxt = e.vehicle_id ? `Bus ${escSafe(e.vehicle_id)}` : 'bus number not captured';
+        marker.bindPopup(
+          `<b>Route ${escSafe(e.route_short_name)}</b> — ${escSafe(TYPE_LABEL[e.type])}<br>` +
+          `${vehicleTxt}<br>${escSafe(fmtDateTime(e.detected_at))}<br>${escSafe(renderEventDetail(e))}`
+        );
+        marker.addTo(vehicleLayer);
+        plotted++;
+      } else {
+        missingLocation++;
+      }
+    } else if (e.type === 'no_show' || e.type === 'route_gap') {
+      affectedRoutes.add(e.route_short_name);
+    }
+  }
+
+  let stopsShown = 0;
+  for (const route of affectedRoutes) {
+    for (const s of (routeStops[route] || [])) {
+      const dot = L.circleMarker([s.lat, s.lon], {
+        radius: 4, color: '#fff', weight: 1, fillColor: '#7c3aed', fillOpacity: 0.75,
+      });
+      dot.bindPopup(`<b>${escSafe(s.name)}</b><br>Route ${escSafe(route)} — possible no-show/coverage gap nearby`);
+      dot.addTo(routeStopLayer);
+      stopsShown++;
+    }
+  }
+
+  const noteParts = [];
+  if (plotted || missingLocation) {
+    noteParts.push(`${plotted} of ${plotted + missingLocation} canceled/severe-delay event(s) plotted` +
+      (missingLocation ? ` (${missingLocation} had no captured bus location)` : ''));
+  }
+  if (affectedRoutes.size) {
+    noteParts.push(`${affectedRoutes.size} route(s) highlighted (${stopsShown} stops) for no-show/route-gap events`);
+  }
+  document.getElementById('map-note').textContent = noteParts.join(' · ') ||
+    'No mappable events in this range.';
+}
+
 let allEvents = [];
 
 function renderEventDetail(e) {
@@ -220,6 +319,7 @@ function renderEventTable() {
   if (typeFilter) rows = rows.filter(e => e.type === typeFilter);
   rows = rows.slice().sort((a, b) => (b.detected_at || '').localeCompare(a.detected_at || ''));
   countEl.textContent = `${rows.length} of ${allEvents.length} events`;
+  renderEventMap(rows);
 
   if (!rows.length) {
     el.innerHTML = '<div class="empty">No events in this range.</div>';
@@ -401,7 +501,8 @@ document.getElementById('range-to').addEventListener('change', () => {
 });
 
 (async () => {
-  await refreshLive();
+  initEventMap();
+  await Promise.all([refreshLive(), loadRouteStops()]);
   const dates = await loadIndexDates();
   applyPreset('today');
   await loadRange();
