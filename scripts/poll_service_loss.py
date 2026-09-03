@@ -78,15 +78,19 @@ ROUTE_GAP_S = 20 * 60
 
 ROUTES_MAX_AGE_S = 7 * 24 * 3600
 
-# Routes still present in the static GTFS mirror (RT-feed short_name form)
-# that GoCary no longer actually operates -- the mirror is a stale snapshot
-# and has no "discontinued" flag, so there's no way to detect this from feed
-# data alone. Maintained manually; confirmed directly by Mark: ACX
-# (2026-09-02) and route 8 (2026-09-03) were both flagged as false
-# route_gaps because the schedule still expects coverage that no longer
-# exists. Anything listed here is excluded entirely from no_show and
-# route_gap detection.
-DISCONTINUED_ROUTES = {"ACX", "8"}
+# Route short_names (RT-feed form) to exclude entirely from detection --
+# no canceled/severe_delay/no_show/route_gap events get created for them.
+# Maintained manually, confirmed directly by Mark each time: ACX and route 8
+# (2026-09-02/03) are routes GoCary no longer actually operates that are
+# still in the stale static GTFS mirror (which has no "discontinued" flag),
+# so the schedule kept expecting coverage that no longer exists and
+# produced false route_gaps. DL (2026-09-03) is different -- it's not a
+# stale-schedule artifact, GoCary's live RT feed itself reports real
+# schedule_relationship=CANCELED trips under this route code, but it isn't
+# a rider-facing route Mark wants tracked (most likely an internal/
+# non-revenue code, e.g. deadhead moves) -- same exclusion mechanism
+# covers both kinds of "not a real service-loss signal" cleanly.
+DISCONTINUED_ROUTES = {"ACX", "8", "DL"}
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "docs" / "data"
@@ -428,6 +432,8 @@ def detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s, f
     # canceled + severe_delay: driven by what actually showed up in the feed
     for trip_id, rec in seen["trips"].items():
         route_id = rec["route_id"]
+        if route_id in DISCONTINUED_ROUTES:
+            continue
         if rec["canceled"]:
             add({
                 "id": f"canceled:{trip_id}", "type": "canceled", "trip_id": trip_id,

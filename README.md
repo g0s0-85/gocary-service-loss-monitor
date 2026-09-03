@@ -44,13 +44,16 @@ All four thresholds are constants at the top of `scripts/poll_service_loss.py`
 GoCary's operational definition of "lost service" differs from these
 defaults.
 
-**Discontinued routes:** the static GTFS mirror still lists routes GoCary
-no longer actually runs (there's no "discontinued" flag in the data), which
-would otherwise show up as false `route_gap`/`no_show` events forever.
-`DISCONTINUED_ROUTES` in `scripts/poll_service_loss.py` is a manually
-maintained exclusion set — add a route's short name there (confirmed
-directly by Mark, same as `ACX` and `8` already are) if this ever flags one
-that's genuinely retired.
+**Discontinued/non-passenger routes:** the static GTFS mirror still lists
+routes GoCary no longer actually runs (there's no "discontinued" flag in
+the data), which would otherwise show up as false `route_gap`/`no_show`
+events forever — `ACX` and `8` are like this. Some route codes in the
+*live* RT feed aren't rider-facing service at all (e.g. `DL`, which reports
+real `CANCELED` trips but isn't a route Mark wants tracked — likely an
+internal/non-revenue code). `DISCONTINUED_ROUTES` in
+`scripts/poll_service_loss.py` is a manually maintained exclusion set
+covering both cases — add a route's short name there (confirmed directly by
+Mark each time) if this ever flags one that shouldn't be tracked.
 
 **On the static GTFS's staleness:** the Trillium mirror this project (and
 gocary-transit-dashboard) pulls from has a `calendar.txt` whose
