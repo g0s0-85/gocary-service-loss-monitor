@@ -73,10 +73,11 @@
   .badge.route_gap { background: var(--route_gap); }
   .badge.resolved { background: var(--resolved); }
 
-  .table-toolbar { padding: 10px 12px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .table-toolbar { padding: 10px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .table-toolbar select, .table-toolbar input {
     padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px;
   }
+  .table-toolbar .range-sep { color: var(--muted); font-size: 12px; }
   .table-toolbar .count { font-size: 12px; color: var(--muted); white-space: nowrap; margin-left: auto; }
   .scroll-body { max-height: 480px; overflow-y: auto; }
   .scroll-body thead th { position: sticky; top: 0; background: var(--card); }
@@ -98,7 +99,17 @@
   <h2>Events</h2>
   <div id="events" class="card">
     <div class="table-toolbar">
-      <select id="date-select"><option>loading…</option></select>
+      <select id="range-preset">
+        <option value="today">Today</option>
+        <option value="3d">Last 3 days</option>
+        <option value="7d">Last 7 days</option>
+        <option value="30d">Last 30 days</option>
+        <option value="all">All time</option>
+        <option value="custom">Custom range</option>
+      </select>
+      <input type="datetime-local" id="range-from">
+      <span class="range-sep">to</span>
+      <input type="datetime-local" id="range-to">
       <select id="type-filter">
         <option value="">All types</option>
         <option value="canceled">Canceled</option>
@@ -131,6 +142,13 @@ function fmtSeconds(s) {
 function fmtTime(iso) {
   if (!iso) return '';
   return new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+// Used in the events table now that it can span a multi-day range -- a
+// bare time-of-day would be ambiguous about which day it happened.
+function fmtDateTime(iso) {
+  if (!iso) return '';
+  return new Date(iso).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 }
 
 const TYPE_LABEL = { canceled: 'Canceled', no_show: 'No-show', severe_delay: 'Severe delay', route_gap: 'Route gap' };
@@ -204,7 +222,7 @@ function renderEventTable() {
   countEl.textContent = `${rows.length} of ${allEvents.length} events`;
 
   if (!rows.length) {
-    el.innerHTML = '<div class="empty">No events for this day.</div>';
+    el.innerHTML = '<div class="empty">No events in this range.</div>';
     return;
   }
   el.innerHTML = `
@@ -215,7 +233,7 @@ function renderEventTable() {
       <tbody>
         ${rows.map(e => `
           <tr>
-            <td>${fmtTime(e.detected_at)}</td>
+            <td>${fmtDateTime(e.detected_at)}</td>
             <td><span class="badge ${escSafe(e.type)}">${escSafe(TYPE_LABEL[e.type] || e.type)}</span>${e.type === 'route_gap' && e.resolved_at ? ' <span class="badge resolved">resolved</span>' : ''}</td>
             <td>${escSafe(e.route_short_name)}</td>
             <td class="detail">${escSafe(e.trip_id || '—')}</td>
@@ -227,24 +245,77 @@ function renderEventTable() {
   `;
 }
 
-async function loadDay(date) {
-  const day = await fetchJson(`docs/data/events/${date}.json`, `data/events/${date}.json`);
-  allEvents = day?.events || [];
-  renderEventTable();
-}
+let allDates = [];
 
-async function loadDateSelect() {
+async function loadIndexDates() {
   const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
   const index = await fetchJson('docs/data/events/index.json', 'data/events/index.json');
-  let dates = (index?.dates || []).slice().sort().reverse();
-  if (!dates.includes(todayStr)) dates = [todayStr, ...dates];
-
-  const sel = document.getElementById('date-select');
-  sel.innerHTML = dates.map(d => `<option value="${d}">${d}${d === todayStr ? ' (today)' : ''}</option>`).join('');
-  sel.value = todayStr;
-  sel.addEventListener('change', () => loadDay(sel.value));
-  await loadDay(todayStr);
+  let dates = (index?.dates || []).slice().sort();
+  if (!dates.includes(todayStr)) dates = [...dates, todayStr];
+  allDates = dates;
   return dates;
+}
+
+// datetime-local inputs work in the viewer's own local time, with no
+// timezone in the value -- so building/reading them with plain
+// getFullYear()/getHours() etc. (not toISOString(), which is UTC) keeps
+// what's typed matching what's displayed.
+function toLocalInputValue(d) {
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function applyPreset(preset) {
+  if (preset === 'custom') return;
+  const now = new Date();
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const presetDays = { today: 1, '3d': 3, '7d': 7, '30d': 30 };
+  let from;
+  if (preset === 'all') {
+    from = new Date(2020, 0, 1);
+  } else {
+    const days = presetDays[preset] ?? 1;
+    from = new Date(startOfToday);
+    from.setDate(from.getDate() - (days - 1));
+  }
+  document.getElementById('range-from').value = toLocalInputValue(from);
+  document.getElementById('range-to').value = toLocalInputValue(now);
+}
+
+async function loadRange() {
+  const fromEl = document.getElementById('range-from');
+  const toEl = document.getElementById('range-to');
+  const from = new Date(fromEl.value);
+  const to = new Date(toEl.value);
+  if (isNaN(from) || isNaN(to)) return;
+
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+  const pad = n => String(n).padStart(2, '0');
+  const dateStr = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  // Widen by a day on each side: allDates are America/New_York service-day
+  // strings, but from/to are parsed in the viewer's own local time, so a
+  // viewer in a different timezone could otherwise miss a boundary day's
+  // file. The precise per-event timestamp check below is what actually
+  // enforces the range -- this padding only decides which files to fetch,
+  // so over-including a day here is harmless, under-including would
+  // silently drop real events.
+  const padStart = new Date(from); padStart.setDate(padStart.getDate() - 1);
+  const padEnd = new Date(to); padEnd.setDate(padEnd.getDate() + 1);
+  const fromBound = dateStr(padStart);
+  const toBound = dateStr(padEnd);
+
+  const candidateDates = allDates.filter(d => d >= fromBound && d <= toBound);
+  const days = await Promise.all(candidateDates.map(d => fetchDayCached(d, todayStr)));
+
+  const merged = [];
+  for (const day of days) {
+    for (const e of (day?.events || [])) {
+      const t = e.detected_at ? new Date(e.detected_at) : null;
+      if (t && t >= from && t <= to) merged.push(e);
+    }
+  }
+  allEvents = merged;
+  renderEventTable();
 }
 
 const TREND_TYPES = ['canceled', 'no_show', 'severe_delay', 'route_gap'];
@@ -267,7 +338,7 @@ async function fetchDayCached(date, todayStr) {
 
 async function loadTrend(dates) {
   const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
-  const recent = dates.slice(0, TREND_WINDOW_DAYS);
+  const recent = dates.slice().sort().reverse().slice(0, TREND_WINDOW_DAYS);
   const days = await Promise.all(recent.map(d => fetchDayCached(d, todayStr)));
   const el = document.getElementById('trend');
 
@@ -316,10 +387,24 @@ async function refreshLive() {
 }
 
 document.getElementById('type-filter').addEventListener('change', renderEventTable);
+document.getElementById('range-preset').addEventListener('change', e => {
+  applyPreset(e.target.value);
+  loadRange();
+});
+document.getElementById('range-from').addEventListener('change', () => {
+  document.getElementById('range-preset').value = 'custom';
+  loadRange();
+});
+document.getElementById('range-to').addEventListener('change', () => {
+  document.getElementById('range-preset').value = 'custom';
+  loadRange();
+});
 
 (async () => {
   await refreshLive();
-  const dates = await loadDateSelect();
+  const dates = await loadIndexDates();
+  applyPreset('today');
+  await loadRange();
   await loadTrend(dates);
   setInterval(refreshLive, 60000);
 })();
