@@ -112,7 +112,7 @@
       <select id="range-preset">
         <option value="today">Today</option>
         <option value="3d">Last 3 days</option>
-        <option value="7d">Last 7 days</option>
+        <option value="7d" selected>Last 7 days</option>
         <option value="30d">Last 30 days</option>
         <option value="all">All time</option>
         <option value="custom">Custom range</option>
@@ -505,7 +505,10 @@ document.getElementById('range-to').addEventListener('change', () => {
   initEventMap();
   await Promise.all([refreshLive(), loadRouteStops()]);
   const dates = await loadIndexDates();
-  applyPreset('today');
+  // Default to a week rather than just today -- a quiet day (genuinely
+  // good news) would otherwise make the dashboard look empty/broken on
+  // first load instead of showing that there's a working system behind it.
+  applyPreset('7d');
   await loadRange();
   await loadTrend(dates);
   setInterval(refreshLive, 60000);
