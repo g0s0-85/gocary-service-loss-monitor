@@ -81,11 +81,12 @@ ROUTES_MAX_AGE_S = 7 * 24 * 3600
 # Routes still present in the static GTFS mirror (RT-feed short_name form)
 # that GoCary no longer actually operates -- the mirror is a stale snapshot
 # and has no "discontinued" flag, so there's no way to detect this from feed
-# data alone. Maintained manually; confirmed directly by Mark (2026-09-02):
-# ACX was flagged as a false route_gap because the schedule still expects
-# coverage that no longer exists. Anything listed here is excluded entirely
-# from no_show and route_gap detection.
-DISCONTINUED_ROUTES = {"ACX"}
+# data alone. Maintained manually; confirmed directly by Mark: ACX
+# (2026-09-02) and route 8 (2026-09-03) were both flagged as false
+# route_gaps because the schedule still expects coverage that no longer
+# exists. Anything listed here is excluded entirely from no_show and
+# route_gap detection.
+DISCONTINUED_ROUTES = {"ACX", "8"}
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "docs" / "data"
