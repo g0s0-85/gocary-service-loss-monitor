@@ -328,7 +328,7 @@ function renderEventTable() {
   el.innerHTML = `
     <table>
       <thead><tr>
-        <th>Time</th><th>Type</th><th>Route</th><th>Trip</th><th>Detail</th>
+        <th>Time</th><th>Type</th><th>Route</th><th>Bus</th><th>Trip</th><th>Detail</th>
       </tr></thead>
       <tbody>
         ${rows.map(e => `
@@ -336,6 +336,7 @@ function renderEventTable() {
             <td>${fmtDateTime(e.detected_at)}</td>
             <td><span class="badge ${escSafe(e.type)}">${escSafe(TYPE_LABEL[e.type] || e.type)}</span>${e.type === 'route_gap' && e.resolved_at ? ' <span class="badge resolved">resolved</span>' : ''}</td>
             <td>${escSafe(e.route_short_name)}</td>
+            <td class="detail">${escSafe(e.vehicle_id || '—')}</td>
             <td class="detail">${escSafe(e.trip_id || '—')}</td>
             <td class="detail">${escSafe(renderEventDetail(e))}</td>
           </tr>
