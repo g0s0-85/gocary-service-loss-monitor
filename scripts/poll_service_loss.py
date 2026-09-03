@@ -378,18 +378,27 @@ def poll_seen(tu_feed, vp_feed, date):
             canceled=(tu.trip.schedule_relationship == CANCELED),
         )
 
-    # VehiclePositions is the only feed that carries an actual bus number
-    # (vehicle.id, GoCary's own fleet numbering) and a live lat/lon -- this
-    # is what lets the dashboard plot "approximately where" a canceled or
+    # VehiclePositions is the only feed with a live lat/lon -- this is what
+    # lets the dashboard plot "approximately where" a canceled or
     # severe_delay event happened; TripUpdates alone has neither.
+    #
+    # VehicleDescriptor.id is a random UUID (GoCary's internal identifier,
+    # same scheme as trip_id -- not human-readable), but .label carries the
+    # actual GoCary fleet/bus number riders and dispatch would recognize
+    # (confirmed by inspecting the raw feed directly: short alphanumeric
+    # codes distinct from the UUID). Prefer label; fall back to id only if
+    # label is ever empty, so there's still *something* to show.
     for entity in vp_feed.entity:
         if not entity.HasField("vehicle") or not entity.vehicle.HasField("trip"):
             continue
         v = entity.vehicle
+        vehicle_id = None
+        if v.HasField("vehicle"):
+            vehicle_id = v.vehicle.label or v.vehicle.id or None
         touch(
             v.trip.trip_id, v.trip.route_id,
             canceled=(v.trip.schedule_relationship == CANCELED),
-            vehicle_id=(v.vehicle.id if v.HasField("vehicle") and v.vehicle.id else None),
+            vehicle_id=vehicle_id,
             lat=(v.position.latitude if v.HasField("position") else None),
             lon=(v.position.longitude if v.HasField("position") else None),
         )
