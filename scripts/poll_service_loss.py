@@ -155,7 +155,11 @@ def ensure_static_data():
     the route's stops rather than a fake precise pin. If a refresh fails,
     keep whatever was already cached rather than failing the whole run."""
     existing_schedule = load_json(SCHEDULE_FILE, None)
-    if existing_schedule is not None:
+    # Also require route_stops.json to already exist before trusting the
+    # cache -- otherwise a schedule.json from before route_stops.json
+    # existed (still within the 7-day window) would make this return early
+    # forever and route_stops.json would never actually get generated.
+    if existing_schedule is not None and ROUTE_STOPS_FILE.exists():
         fetched_at = existing_schedule.get("_fetched_at")
         if fetched_at:
             age = time.time() - datetime.fromisoformat(fetched_at).timestamp()
