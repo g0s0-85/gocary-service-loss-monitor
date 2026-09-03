@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-03T00:55:17.836533+00:00",
+  "updated_at": "2026-09-03T00:56:20.656596+00:00",
   "date": "2026-09-02",
   "open_route_gaps": [],
   "today_events": [
@@ -56,6 +56,17 @@
       "detected_at": "2026-09-02T23:24:15.993084+00:00",
       "resolved_at": null,
       "delay_seconds": 1201,
+      "alerted": true
+    },
+    {
+      "id": "canceled:e56e601a-44be-483e-bc81-2f0e8b6a6bce",
+      "type": "canceled",
+      "trip_id": "e56e601a-44be-483e-bc81-2f0e8b6a6bce",
+      "route_id": "GA1",
+      "route_short_name": "GA1",
+      "detected_at": "2026-09-03T00:56:20.655464+00:00",
+      "resolved_at": null,
+      "delay_seconds": 0,
       "alerted": true
     }
   ]
