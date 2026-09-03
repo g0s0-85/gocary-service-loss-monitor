@@ -92,6 +92,14 @@
   .dot.canceled { background: var(--canceled); }
   .dot.severe_delay { background: var(--severe_delay); }
   .dot.route-stop { background: var(--no_show); width: 6px; height: 6px; }
+
+  #info-panel { padding: 14px 16px; margin-bottom: 20px; font-size: 13px; }
+  #info-panel h2 { margin: 0 0 10px; }
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+  .info-item { display: flex; gap: 8px; align-items: flex-start; }
+  .info-item .badge { flex-shrink: 0; margin-top: 1px; }
+  .info-item p { margin: 2px 0 0; color: var(--muted); line-height: 1.4; }
+  .info-note { margin: 12px 0 0; padding-top: 10px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
 </style>
 </head>
 <body>
@@ -104,6 +112,14 @@
   <div id="status">loading status…</div>
 </header>
 <main>
+  <div id="info-panel" class="card">
+    <h2 style="margin-top:0">How detection works</h2>
+    <div class="info-grid" id="info-grid">
+      <div class="empty" style="grid-column:1/-1; padding:8px 0;">Loading…</div>
+    </div>
+    <p class="info-note" id="info-note"></p>
+  </div>
+
   <div id="gap-banner"></div>
 
   <h2>Events</h2>
@@ -213,6 +229,38 @@ function renderStatus(status) {
     el.textContent = `last polled ${new Date(status.last_polled).toLocaleString()} · ` +
       `${status.events_today ?? 0} event(s) today · ${status.open_route_gaps ?? 0} open gap(s)`;
   }
+}
+
+let infoPanelRendered = false;
+
+// Rendered once from the first status.json that has a config block --
+// these are the live constants from scripts/poll_service_loss.py itself
+// (published each poll), not hardcoded text here, so this never drifts
+// out of sync with what the poller is actually doing.
+function renderInfoPanel(status) {
+  if (infoPanelRendered) return; // static once known -- no need to re-render every 60s refresh
+  const cfg = status?.config;
+  const gridEl = document.getElementById('info-grid');
+  const noteEl = document.getElementById('info-note');
+  if (!cfg) return; // keep showing "Loading..." until the poller has published one
+
+  const items = [
+    { type: 'canceled', text: 'RT feed\'s own CANCELED flag on a trip — no threshold, direct signal.' },
+    { type: 'severe_delay', text: `A trip's delay exceeds ${cfg.severe_delay_min} min.` },
+    { type: 'no_show', text: `Fewer distinct trips observed on a route than scheduled trips whose window closed ${cfg.no_show_grace_min}+ min ago. Suppressed on the monitor's first day of operation.` },
+    { type: 'route_gap', text: `A route with scheduled coverage right now has gone ${cfg.route_gap_min}+ min with no activity. Auto-resolves once coverage resumes.` },
+  ];
+  gridEl.innerHTML = items.map(i => `
+    <div class="info-item">
+      <span class="badge ${escSafe(i.type)}">${escSafe(TYPE_LABEL[i.type])}</span>
+      <p>${escSafe(i.text)}</p>
+    </div>
+  `).join('');
+
+  noteEl.textContent = cfg.discontinued_routes?.length
+    ? `Excluded from all detection (confirmed retired/non-passenger routes): ${cfg.discontinued_routes.join(', ')}.`
+    : '';
+  infoPanelRendered = true;
 }
 
 function renderGapBanner(active) {
@@ -485,6 +533,7 @@ async function refreshLive() {
   ]);
   renderStatus(status);
   renderGapBanner(active);
+  renderInfoPanel(status);
 }
 
 document.getElementById('type-filter').addEventListener('change', renderEventTable);

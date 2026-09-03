@@ -638,6 +638,15 @@ def main():
         write_active_events(date, day)
 
         status["last_error"] = None
+        # Published so the dashboard's "how detection works" panel always
+        # reflects the actual live constants below rather than hardcoded
+        # text that could drift out of sync with the code.
+        status["config"] = {
+            "severe_delay_min": SEVERE_DELAY_S // 60,
+            "no_show_grace_min": NO_SHOW_GRACE_S // 60,
+            "route_gap_min": ROUTE_GAP_S // 60,
+            "discontinued_routes": sorted(DISCONTINUED_ROUTES),
+        }
         status["events_today"] = len(day["events"])
         status["open_route_gaps"] = sum(1 for e in day["events"] if e["type"] == "route_gap" and e["resolved_at"] is None)
         status["new_events_this_poll"] = len(new_events)
