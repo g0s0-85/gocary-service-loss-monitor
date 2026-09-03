@@ -1,7 +1,7 @@
 {
-  "last_polled": "2026-09-03T12:31:13.142534+00:00",
+  "last_polled": "2026-09-03T12:32:17.563382+00:00",
   "last_error": null,
-  "polls_run": 960,
+  "polls_run": 961,
   "events_today": 1,
   "open_route_gaps": 1,
   "new_events_this_poll": 0,
