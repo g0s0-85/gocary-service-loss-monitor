@@ -1,4 +1,47 @@
 {
   "date": "2026-09-03",
-  "events": []
+  "events": [
+    {
+      "id": "canceled:0d7b478e-05ba-48c9-a3c7-f762f01183eb",
+      "type": "canceled",
+      "trip_id": "0d7b478e-05ba-48c9-a3c7-f762f01183eb",
+      "route_id": "DL",
+      "route_short_name": "DL",
+      "detected_at": "2026-09-03T14:04:13.310813+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "canceled:9ed33706-9ecb-4a11-8b9e-e67b098f1e54",
+      "type": "canceled",
+      "trip_id": "9ed33706-9ecb-4a11-8b9e-e67b098f1e54",
+      "route_id": "DL",
+      "route_short_name": "DL",
+      "detected_at": "2026-09-03T14:04:13.310824+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "canceled:29a654d2-2c5b-4fd0-9a39-15a1221945ea",
+      "type": "canceled",
+      "trip_id": "29a654d2-2c5b-4fd0-9a39-15a1221945ea",
+      "route_id": "DL",
+      "route_short_name": "DL",
+      "detected_at": "2026-09-03T14:04:13.310829+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
+    }
+  ]
 }
