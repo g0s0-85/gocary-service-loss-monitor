@@ -1,0 +1,390 @@
+{
+  "1": [
+    {
+      "name": "Cary Depot (North Platform)",
+      "lat": 35.788261,
+      "lon": -78.782201
+    },
+    {
+      "name": "Walnut St at Meeting St",
+      "lat": 35.759505,
+      "lon": -78.742589
+    },
+    {
+      "name": "Walnut St at Cary Towne Center",
+      "lat": 35.770388,
+      "lon": -78.761566
+    },
+    {
+      "name": "Macedonia Lake Dr at Centrum at Crossroads",
+      "lat": 35.751727,
+      "lon": -78.745423
+    },
+    {
+      "name": "Crossroads Blvd at Marshalls",
+      "lat": 35.76018199999999,
+      "lon": -78.735793
+    },
+    {
+      "name": "SE Maynard Rd at East Cary Middle",
+      "lat": 35.780978,
+      "lon": -78.764367
+    },
+    {
+      "name": "SE Maynard Rd at Village Greenway",
+      "lat": 35.780364,
+      "lon": -78.764089
+    },
+    {
+      "name": "E Chatham St at Chatham Square (EB)",
+      "lat": 35.791739,
+      "lon": -78.765739
+    },
+    {
+      "name": "Cary Depot (South Platform)",
+      "lat": 35.788181,
+      "lon": -78.781819
+    },
+    {
+      "name": "Walnut St at Cary Towne Centre OB",
+      "lat": 35.770061,
+      "lon": -78.761522
+    },
+    {
+      "name": "E Chatham St at Chatham Square (WB)",
+      "lat": 35.791603,
+      "lon": -78.767197
+    }
+  ],
+  "3": [
+    {
+      "name": "Harrison Ave at NW Maynard Rd (Northwoods Market)",
+      "lat": 35.801451,
+      "lon": -78.783125
+    },
+    {
+      "name": "Cary Depot (North Platform)",
+      "lat": 35.788261,
+      "lon": -78.782201
+    },
+    {
+      "name": "Harrison Oaks Blvd at N Harrison Ave",
+      "lat": 35.8304731561891,
+      "lon": -78.76746728946961
+    },
+    {
+      "name": "Harrison Ave at NE Maynard Rd (NB)",
+      "lat": 35.801859,
+      "lon": -78.782833
+    },
+    {
+      "name": "Cary Depot (South Platform)",
+      "lat": 35.788181,
+      "lon": -78.781819
+    }
+  ],
+  "4": [
+    {
+      "name": "High House Rd at Davis Dr (EB)",
+      "lat": 35.791715,
+      "lon": -78.846245
+    },
+    {
+      "name": "NC Highway 55 at Wal-Mart",
+      "lat": 35.78668793558555,
+      "lon": -78.86980401523002
+    },
+    {
+      "name": "Bond Park at Cary Senior Center",
+      "lat": 35.785598,
+      "lon": -78.82631
+    },
+    {
+      "name": "Cary Depot (North Platform)",
+      "lat": 35.788261,
+      "lon": -78.782201
+    },
+    {
+      "name": "High House Rd at Davis Dr (OB)",
+      "lat": 35.791389,
+      "lon": -78.847749
+    },
+    {
+      "name": "NC 55 at Green Level West Rd",
+      "lat": 35.787175,
+      "lon": -78.87109
+    },
+    {
+      "name": "High House Rd at NW Maynard Rd (IB)",
+      "lat": 35.783386,
+      "lon": -78.810469
+    },
+    {
+      "name": "Maynard Crossing at Harris Teeter",
+      "lat": 35.785376,
+      "lon": -78.811681
+    },
+    {
+      "name": "High House Rd at Maynard Crossing",
+      "lat": 35.783664,
+      "lon": -78.812127
+    },
+    {
+      "name": "Highland Village (OB)",
+      "lat": 35.784228,
+      "lon": -78.79619
+    },
+    {
+      "name": "Highland Village",
+      "lat": 35.784099999999995,
+      "lon": -78.796236
+    },
+    {
+      "name": "Cary Depot (South Platform)",
+      "lat": 35.788181,
+      "lon": -78.781819
+    },
+    {
+      "name": "Maynard Crossing Shopping Center (West Platform)",
+      "lat": 35.785278,
+      "lon": -78.81191
+    }
+  ],
+  "5": [
+    {
+      "name": "Crescent Commons Dr at Crescent Green (Walmart)",
+      "lat": 35.735436,
+      "lon": -78.782055
+    },
+    {
+      "name": "Cary Depot (North Platform)",
+      "lat": 35.788261,
+      "lon": -78.782201
+    },
+    {
+      "name": "Kildaire Farm Rd at  WakeMed Cary Hospital",
+      "lat": 35.741229848,
+      "lon": -78.7803589351
+    },
+    {
+      "name": "Kildaire Farm Rd at SE Maynard Rd (Rite Aid)",
+      "lat": 35.771664,
+      "lon": -78.781629
+    },
+    {
+      "name": "Cary Depot (South Platform)",
+      "lat": 35.788181,
+      "lon": -78.781819
+    },
+    {
+      "name": "Kildaire Farm Rd at Mayfair Plaza",
+      "lat": 35.77256,
+      "lon": -78.781881
+    }
+  ],
+  "6": [
+    {
+      "name": "Cary Depot (North Platform)",
+      "lat": 35.788261,
+      "lon": -78.782201
+    },
+    {
+      "name": "Buck Jones Rd at Nottingham Dr (EB)",
+      "lat": 35.768179,
+      "lon": -78.740714
+    },
+    {
+      "name": "Buck Jones Rd at Nottingham Dr (WB)",
+      "lat": 35.768701,
+      "lon": -78.74082
+    },
+    {
+      "name": "Walnut St at Cary Towne Center",
+      "lat": 35.770388,
+      "lon": -78.761566
+    },
+    {
+      "name": "Donaldson Dr at Patrick Cir (NB)",
+      "lat": 35.765585,
+      "lon": -78.748655
+    },
+    {
+      "name": "Donaldson Dr. at Patrick Cir.",
+      "lat": 35.765492,
+      "lon": -78.748777
+    },
+    {
+      "name": "Cary Depot (South Platform)",
+      "lat": 35.788181,
+      "lon": -78.781819
+    },
+    {
+      "name": "Walnut St at Cary Towne Centre OB",
+      "lat": 35.770061,
+      "lon": -78.761522
+    },
+    {
+      "name": "Plaza West Shopping Center",
+      "lat": 35.784803318726,
+      "lon": -78.721107135196
+    }
+  ],
+  "7": [
+    {
+      "name": "Weston Parkway at Evans Road IB",
+      "lat": 35.826872,
+      "lon": -78.805443
+    },
+    {
+      "name": "Cary Depot (North Platform)",
+      "lat": 35.788261,
+      "lon": -78.782201
+    },
+    {
+      "name": "Weston Parkway at Evans Rd OB",
+      "lat": 35.826906,
+      "lon": -78.804091
+    },
+    {
+      "name": "Chapel Hill Road at Market Center Dr",
+      "lat": 35.807925,
+      "lon": -78.814332
+    },
+    {
+      "name": "Harrison Oaks Blvd at N Harrison Ave",
+      "lat": 35.8304731561891,
+      "lon": -78.76746728946961
+    },
+    {
+      "name": "James Jackson Avenue at Towerview Court OB",
+      "lat": 35.798859,
+      "lon": -78.810872
+    },
+    {
+      "name": "Chapel Hill Road at NW Cary Parkway",
+      "lat": 35.807692,
+      "lon": -78.813073
+    },
+    {
+      "name": "Cary Depot (South Platform)",
+      "lat": 35.788181,
+      "lon": -78.781819
+    },
+    {
+      "name": "James Jackson Avenue at Towerview Court IB",
+      "lat": 35.799131,
+      "lon": -78.811473
+    }
+  ],
+  "8": [
+    {
+      "name": "SW Cary Parkway at the Fresh Market",
+      "lat": 35.781456,
+      "lon": -78.837291
+    },
+    {
+      "name": "Cary Depot (North Platform)",
+      "lat": 35.788261,
+      "lon": -78.782201
+    },
+    {
+      "name": "REX Wellness Center",
+      "lat": 35.75366,
+      "lon": -78.810357
+    },
+    {
+      "name": "Bond Park at Cary Senior Center",
+      "lat": 35.785598,
+      "lon": -78.82631
+    },
+    {
+      "name": "Maynard Crossing at Harris Teeter",
+      "lat": 35.785376,
+      "lon": -78.811681
+    },
+    {
+      "name": "SW Cary Parkway at Bebington Drive",
+      "lat": 35.780744,
+      "lon": -78.837219
+    },
+    {
+      "name": "Taylor Family YMCA",
+      "lat": 35.776889,
+      "lon": -78.835194
+    },
+    {
+      "name": "Weatherstone Spring",
+      "lat": 35.791789,
+      "lon": -78.80871
+    },
+    {
+      "name": "Maynard Crossing Shopping Center (West Platform)",
+      "lat": 35.785278,
+      "lon": -78.81191
+    }
+  ],
+  "ACX": [
+    {
+      "name": "N Salem St at Hunter Street OB",
+      "lat": 35.736218,
+      "lon": -78.849098
+    },
+    {
+      "name": "Cary Depot (North Platform)",
+      "lat": 35.788261,
+      "lon": -78.782201
+    },
+    {
+      "name": "Apex Park and Ride (Compare Foods)",
+      "lat": 35.72651,
+      "lon": -78.851219
+    },
+    {
+      "name": "N Salem St at Hunter St IB",
+      "lat": 35.735523,
+      "lon": -78.849013
+    }
+  ],
+  "GA1": [
+    {
+      "name": "Chapel Ridge Rd at Olive Chapel Professional Park (SB)",
+      "lat": 35.737313,
+      "lon": -78.888764
+    },
+    {
+      "name": "E Williams St at S Mason St (NB)",
+      "lat": 35.725827,
+      "lon": -78.8501
+    },
+    {
+      "name": "Hunter St at Town Hall Campus (EB)",
+      "lat": 35.73453,
+      "lon": -78.845493
+    },
+    {
+      "name": "E Williams St at S Hughes St (SB)",
+      "lat": 35.726105,
+      "lon": -78.851297
+    },
+    {
+      "name": "Beaver Creek Commons Dr at Lowe's (EB)",
+      "lat": 35.745468,
+      "lon": -78.874547
+    },
+    {
+      "name": "W Williams St at Healthplex Way (SB)",
+      "lat": 35.740806,
+      "lon": -78.867814
+    },
+    {
+      "name": "Tingen Rd at Peace Haven Pl (NB)",
+      "lat": 35.717794,
+      "lon": -78.856513
+    },
+    {
+      "name": "Beaver Creek Commons Dr at Chick-fil-A (WB)",
+      "lat": 35.745855,
+      "lon": -78.874754
+    }
+  ]
+}
