@@ -305,10 +305,10 @@
       "route_id": "5",
       "route_short_name": "5",
       "detected_at": "2026-09-04T02:00:21.651501+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-04T02:14:13.552910+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "no_show:3:78180",
