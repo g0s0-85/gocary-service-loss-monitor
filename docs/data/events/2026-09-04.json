@@ -1,4 +1,33 @@
 {
   "date": "2026-09-04",
-  "events": []
+  "events": [
+    {
+      "id": "severe_delay:39ddc7ed-f522-4d75-9532-d833f5e2dc13",
+      "type": "severe_delay",
+      "trip_id": "39ddc7ed-f522-4d75-9532-d833f5e2dc13",
+      "route_id": "5",
+      "route_short_name": "5",
+      "detected_at": "2026-09-04T11:19:14.180927+00:00",
+      "resolved_at": null,
+      "delay_seconds": 1263,
+      "alerted": true,
+      "vehicle_id": "1505",
+      "lat": 35.73619842529297,
+      "lon": -78.7795639038086
+    },
+    {
+      "id": "severe_delay:09dbfe7c-1b3d-4366-8856-d52181c102b4",
+      "type": "severe_delay",
+      "trip_id": "09dbfe7c-1b3d-4366-8856-d52181c102b4",
+      "route_id": "5",
+      "route_short_name": "5",
+      "detected_at": "2026-09-04T11:19:14.180938+00:00",
+      "resolved_at": null,
+      "delay_seconds": 1979,
+      "alerted": true,
+      "vehicle_id": "1505",
+      "lat": 35.73469543457031,
+      "lon": -78.77924346923828
+    }
+  ]
 }
