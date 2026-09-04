@@ -229,10 +229,10 @@
       "route_id": "5",
       "route_short_name": "5",
       "detected_at": "2026-09-04T01:00:27.127651+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-04T01:29:11.395539+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "no_show:3:74580",
@@ -243,6 +243,19 @@
       "scheduled_start_s": 74580,
       "scheduled_end_s": 75120,
       "detected_at": "2026-09-04T01:07:14.775030+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true
+    },
+    {
+      "id": "no_show:5:75600",
+      "type": "no_show",
+      "trip_id": null,
+      "route_id": "5",
+      "route_short_name": "5",
+      "scheduled_start_s": 75600,
+      "scheduled_end_s": 76440,
+      "detected_at": "2026-09-04T01:29:11.395458+00:00",
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true
