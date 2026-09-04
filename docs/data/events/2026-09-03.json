@@ -191,10 +191,10 @@
       "route_id": "3",
       "route_short_name": "3",
       "detected_at": "2026-09-04T00:30:24.069864+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-04T00:52:11.995675+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "no_show:5:72840",
