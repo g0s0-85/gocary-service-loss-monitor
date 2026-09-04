@@ -259,6 +259,18 @@
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true
+    },
+    {
+      "id": "route_gap:3:2026-09-04T01:30:18.820331+00:00",
+      "type": "route_gap",
+      "trip_id": null,
+      "route_id": "3",
+      "route_short_name": "3",
+      "detected_at": "2026-09-04T01:30:18.820334+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true,
+      "alerted_resolved": false
     }
   ]
 }
