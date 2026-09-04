@@ -271,6 +271,19 @@
       "delay_seconds": null,
       "alerted": true,
       "alerted_resolved": false
+    },
+    {
+      "id": "no_show:5:76440",
+      "type": "no_show",
+      "trip_id": null,
+      "route_id": "5",
+      "route_short_name": "5",
+      "scheduled_start_s": 76440,
+      "scheduled_end_s": 77340,
+      "detected_at": "2026-09-04T01:44:13.744617+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true
     }
   ]
 }
