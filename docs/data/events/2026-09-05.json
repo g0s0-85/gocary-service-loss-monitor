@@ -14,6 +14,20 @@
       "vehicle_id": "1503",
       "lat": 35.788238525390625,
       "lon": -78.78138732910156
+    },
+    {
+      "id": "severe_delay:e68d9581-ae95-4585-b487-57a0166869cb",
+      "type": "severe_delay",
+      "trip_id": "e68d9581-ae95-4585-b487-57a0166869cb",
+      "route_id": "9",
+      "route_short_name": "9",
+      "detected_at": "2026-09-05T22:57:10.288139+00:00",
+      "resolved_at": null,
+      "delay_seconds": 1628,
+      "alerted": true,
+      "vehicle_id": "1524",
+      "lat": 35.788360595703125,
+      "lon": -78.7825698852539
     }
   ]
 }
