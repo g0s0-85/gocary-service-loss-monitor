@@ -28,6 +28,20 @@
       "vehicle_id": null,
       "lat": null,
       "lon": null
+    },
+    {
+      "id": "severe_delay:d7992fa4-9880-42cb-813d-0aabae91086b",
+      "type": "severe_delay",
+      "trip_id": "d7992fa4-9880-42cb-813d-0aabae91086b",
+      "route_id": "GA1",
+      "route_short_name": "GA1",
+      "detected_at": "2026-09-06T18:47:11.946176+00:00",
+      "resolved_at": null,
+      "delay_seconds": 1220,
+      "alerted": true,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
     }
   ]
 }
