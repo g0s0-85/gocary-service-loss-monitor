@@ -1,20 +1,7 @@
 {
-  "updated_at": "2026-09-07T15:01:14.400354+00:00",
+  "updated_at": "2026-09-07T15:02:15.000873+00:00",
   "date": "2026-09-07",
-  "open_route_gaps": [
-    {
-      "id": "route_gap:GA1:2026-09-07T14:11:14.447129+00:00",
-      "type": "route_gap",
-      "trip_id": null,
-      "route_id": "GA1",
-      "route_short_name": "GA1",
-      "detected_at": "2026-09-07T14:11:14.447132+00:00",
-      "resolved_at": null,
-      "delay_seconds": null,
-      "alerted": true,
-      "alerted_resolved": false
-    }
-  ],
+  "open_route_gaps": [],
   "today_events": [
     {
       "id": "route_gap:GA1:2026-09-07T10:11:22.460477+00:00",
@@ -734,10 +721,10 @@
       "route_id": "GA1",
       "route_short_name": "GA1",
       "detected_at": "2026-09-07T14:11:14.447132+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-07T15:02:14.999030+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "no_show:5:35040",
