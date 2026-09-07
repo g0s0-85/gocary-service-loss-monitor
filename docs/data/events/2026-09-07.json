@@ -348,6 +348,19 @@
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true
+    },
+    {
+      "id": "no_show:6:30600",
+      "type": "no_show",
+      "trip_id": null,
+      "route_id": "6",
+      "route_short_name": "6",
+      "scheduled_start_s": 30600,
+      "scheduled_end_s": 31860,
+      "detected_at": "2026-09-07T13:06:48.521613+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true
     }
   ]
 }
