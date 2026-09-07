@@ -698,6 +698,31 @@
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true
+    },
+    {
+      "id": "no_show:1:34200",
+      "type": "no_show",
+      "trip_id": null,
+      "route_id": "1",
+      "route_short_name": "1",
+      "scheduled_start_s": 34200,
+      "scheduled_end_s": 35760,
+      "detected_at": "2026-09-07T14:11:14.446948+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true
+    },
+    {
+      "id": "route_gap:GA1:2026-09-07T14:11:14.447129+00:00",
+      "type": "route_gap",
+      "trip_id": null,
+      "route_id": "GA1",
+      "route_short_name": "GA1",
+      "detected_at": "2026-09-07T14:11:14.447132+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true,
+      "alerted_resolved": false
     }
   ]
 }
