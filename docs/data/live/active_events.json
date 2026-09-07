@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-07T20:16:12.382444+00:00",
+  "updated_at": "2026-09-07T20:17:14.210016+00:00",
   "date": "2026-09-07",
   "open_route_gaps": [
     {
@@ -2458,6 +2458,19 @@
       "scheduled_start_s": 56640,
       "scheduled_end_s": 57540,
       "detected_at": "2026-09-07T20:14:12.619854+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true
+    },
+    {
+      "id": "no_show:GA1:54660",
+      "type": "no_show",
+      "trip_id": null,
+      "route_id": "GA1",
+      "route_short_name": "GA1",
+      "scheduled_start_s": 54660,
+      "scheduled_end_s": 57720,
+      "detected_at": "2026-09-07T20:17:14.206474+00:00",
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true
