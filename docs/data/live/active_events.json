@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-07T21:27:11.309253+00:00",
+  "updated_at": "2026-09-07T21:28:15.781646+00:00",
   "date": "2026-09-07",
   "open_route_gaps": [
     {
@@ -2756,6 +2756,19 @@
       "scheduled_start_s": 58260,
       "scheduled_end_s": 61320,
       "detected_at": "2026-09-07T21:17:10.778668+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true
+    },
+    {
+      "id": "no_show:3:61200",
+      "type": "no_show",
+      "trip_id": null,
+      "route_id": "3",
+      "route_short_name": "3",
+      "scheduled_start_s": 61200,
+      "scheduled_end_s": 61980,
+      "detected_at": "2026-09-07T21:28:15.778457+00:00",
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true
