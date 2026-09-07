@@ -192,6 +192,19 @@
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true
+    },
+    {
+      "id": "no_show:GA1:25860",
+      "type": "no_show",
+      "trip_id": null,
+      "route_id": "GA1",
+      "route_short_name": "GA1",
+      "scheduled_start_s": 25860,
+      "scheduled_end_s": 28920,
+      "detected_at": "2026-09-07T12:17:13.105290+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true
     }
   ]
 }
