@@ -3224,6 +3224,32 @@
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true
+    },
+    {
+      "id": "no_show:1:66480",
+      "type": "no_show",
+      "trip_id": null,
+      "route_id": "1",
+      "route_short_name": "1",
+      "scheduled_start_s": 66480,
+      "scheduled_end_s": 67980,
+      "detected_at": "2026-09-07T23:08:15.610248+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true
+    },
+    {
+      "id": "no_show:4:66600",
+      "type": "no_show",
+      "trip_id": null,
+      "route_id": "4",
+      "route_short_name": "4",
+      "scheduled_start_s": 66600,
+      "scheduled_end_s": 67980,
+      "detected_at": "2026-09-07T23:08:15.610332+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true
     }
   ]
 }
