@@ -2714,10 +2714,10 @@
       "route_id": "GA1",
       "route_short_name": "GA1",
       "detected_at": "2026-09-07T21:11:10.539937+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-07T22:02:13.202381+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "no_show:5:60240",
