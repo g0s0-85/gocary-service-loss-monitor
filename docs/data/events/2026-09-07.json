@@ -1004,10 +1004,10 @@
       "route_id": "GA1",
       "route_short_name": "GA1",
       "detected_at": "2026-09-07T15:11:14.027295+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-07T16:02:13.641405+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "no_show:5:38640",
