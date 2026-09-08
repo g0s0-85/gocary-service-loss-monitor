@@ -1,9 +1,9 @@
 {
-  "last_polled": "2026-09-08T00:10:16.902839+00:00",
+  "last_polled": "2026-09-08T00:11:10.818330+00:00",
   "last_error": null,
-  "polls_run": 7403,
-  "events_today": 272,
-  "open_route_gaps": 0,
+  "polls_run": 7404,
+  "events_today": 273,
+  "open_route_gaps": 1,
   "new_events_this_poll": 1,
   "first_run_date": "2026-09-02",
   "config": {

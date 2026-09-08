@@ -3522,6 +3522,18 @@
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true
+    },
+    {
+      "id": "route_gap:GA1:2026-09-08T00:11:10.811858+00:00",
+      "type": "route_gap",
+      "trip_id": null,
+      "route_id": "GA1",
+      "route_short_name": "GA1",
+      "detected_at": "2026-09-08T00:11:10.811861+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true,
+      "alerted_resolved": false
     }
   ]
 }
