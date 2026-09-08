@@ -3808,10 +3808,10 @@
       "route_id": "1",
       "route_short_name": "1",
       "detected_at": "2026-09-08T01:28:14.277832+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-08T01:53:11.980690+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "no_show:5:75600",
