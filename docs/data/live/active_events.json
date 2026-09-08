@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-08T01:24:14.857191+00:00",
+  "updated_at": "2026-09-08T01:25:13.270234+00:00",
   "date": "2026-09-07",
   "open_route_gaps": [
     {
@@ -27,24 +27,24 @@
       "alerted_resolved": false
     },
     {
-      "id": "route_gap:6:2026-09-08T01:11:11.972530+00:00",
-      "type": "route_gap",
-      "trip_id": null,
-      "route_id": "6",
-      "route_short_name": "6",
-      "detected_at": "2026-09-08T01:11:11.972532+00:00",
-      "resolved_at": null,
-      "delay_seconds": null,
-      "alerted": true,
-      "alerted_resolved": false
-    },
-    {
       "id": "route_gap:1:2026-09-08T01:18:11.742980+00:00",
       "type": "route_gap",
       "trip_id": null,
       "route_id": "1",
       "route_short_name": "1",
       "detected_at": "2026-09-08T01:18:11.742983+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true,
+      "alerted_resolved": false
+    },
+    {
+      "id": "route_gap:7:2026-09-08T01:25:13.265617+00:00",
+      "type": "route_gap",
+      "trip_id": null,
+      "route_id": "7",
+      "route_short_name": "7",
+      "detected_at": "2026-09-08T01:25:13.265619+00:00",
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true,
@@ -3786,10 +3786,10 @@
       "route_id": "6",
       "route_short_name": "6",
       "detected_at": "2026-09-08T01:11:11.972532+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-08T01:25:13.265631+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "route_gap:7:2026-09-08T01:12:17.080488+00:00",
@@ -3835,6 +3835,18 @@
       "route_id": "1",
       "route_short_name": "1",
       "detected_at": "2026-09-08T01:18:11.742983+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true,
+      "alerted_resolved": false
+    },
+    {
+      "id": "route_gap:7:2026-09-08T01:25:13.265617+00:00",
+      "type": "route_gap",
+      "trip_id": null,
+      "route_id": "7",
+      "route_short_name": "7",
+      "detected_at": "2026-09-08T01:25:13.265619+00:00",
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true,
