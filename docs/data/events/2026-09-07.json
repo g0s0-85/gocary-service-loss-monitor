@@ -3959,10 +3959,10 @@
       "route_id": "6",
       "route_short_name": "6",
       "detected_at": "2026-09-08T02:00:22.396731+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-08T02:25:13.417352+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "route_gap:5:2026-09-08T02:00:22.396744+00:00",
