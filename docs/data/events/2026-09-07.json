@@ -3947,10 +3947,10 @@
       "route_id": "4",
       "route_short_name": "4",
       "detected_at": "2026-09-08T02:00:22.396715+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-08T02:23:12.710034+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "route_gap:6:2026-09-08T02:00:22.396727+00:00",
