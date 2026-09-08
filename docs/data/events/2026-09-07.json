@@ -3759,10 +3759,10 @@
       "route_id": "4",
       "route_short_name": "4",
       "detected_at": "2026-09-08T01:14:14.519315+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-08T01:23:10.390457+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "no_show:GA1:72660",
