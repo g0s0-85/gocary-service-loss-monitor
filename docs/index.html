@@ -470,17 +470,26 @@ async function loadRange() {
 const TREND_TYPES = ['canceled', 'no_show', 'severe_delay', 'route_gap'];
 const TREND_WINDOW_DAYS = 14;
 const CACHE_PREFIX = 'gocary-events:';
+// Past days are *usually* immutable once the service day is over, but not
+// always -- a bad detection (e.g. the 2026-09-07 false-positive flood from
+// an unhandled holiday schedule) can mean a past day's file gets corrected
+// after the fact. An unbounded cache would hide that correction from
+// anyone who'd already loaded the page. A few hours' TTL keeps the
+// Contents-API-budget savings for repeat views in one sitting, while still
+// picking up a correction without anyone needing to manually clear
+// browser storage.
+const CACHE_TTL_MS = 3 * 60 * 60 * 1000;
 
 async function fetchDayCached(date, todayStr) {
   if (date !== todayStr) {
     try {
-      const cached = localStorage.getItem(CACHE_PREFIX + date);
-      if (cached) return JSON.parse(cached);
+      const cached = JSON.parse(localStorage.getItem(CACHE_PREFIX + date));
+      if (cached && Date.now() - cached.cachedAt < CACHE_TTL_MS) return cached.data;
     } catch {}
   }
   const data = await fetchJson(`docs/data/events/${date}.json`, `data/events/${date}.json`);
   if (data && date !== todayStr) {
-    try { localStorage.setItem(CACHE_PREFIX + date, JSON.stringify(data)); } catch {}
+    try { localStorage.setItem(CACHE_PREFIX + date, JSON.stringify({ data, cachedAt: Date.now() })); } catch {}
   }
   return data;
 }
