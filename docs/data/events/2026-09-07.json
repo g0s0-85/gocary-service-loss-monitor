@@ -3723,10 +3723,10 @@
       "route_id": "GA1",
       "route_short_name": "GA1",
       "detected_at": "2026-09-08T01:11:11.972521+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-08T02:02:12.910280+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "route_gap:6:2026-09-08T01:11:11.972530+00:00",
