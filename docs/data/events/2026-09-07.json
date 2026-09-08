@@ -3747,10 +3747,10 @@
       "route_id": "7",
       "route_short_name": "7",
       "detected_at": "2026-09-08T01:12:17.080491+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-08T01:24:14.852980+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "route_gap:4:2026-09-08T01:14:14.519312+00:00",
