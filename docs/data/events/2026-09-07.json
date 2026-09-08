@@ -3857,10 +3857,10 @@
       "route_id": "6",
       "route_short_name": "6",
       "detected_at": "2026-09-08T01:30:19.547940+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-09-08T01:51:15.538916+00:00",
       "delay_seconds": null,
       "alerted": true,
-      "alerted_resolved": false
+      "alerted_resolved": true
     },
     {
       "id": "no_show:4:75600",
