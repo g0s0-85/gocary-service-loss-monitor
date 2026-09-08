@@ -31,6 +31,11 @@ script only classifies things, it never decides polling frequency (that's an
 external cron-job.org trigger hitting workflow_dispatch, same reasoning as
 that project -- GitHub's own `schedule:` trigger is unreliable).
 
+Holiday schedules: GoCary runs Sunday-level (or fully closed) service on
+its published holidays rather than the calendar day's normal pattern --
+see holiday_schedule_override() for the policy and why it has to be
+hardcoded here rather than read from the feed.
+
 Known limitation: "today" is the real calendar date in America/New_York, not
 a GTFS service-day, so a trip scheduled past midnight (stop_times.txt times
 >= 24:00:00) would have its in-progress tracking reset at the real midnight
@@ -46,7 +51,7 @@ import json
 import os
 import time
 import zipfile
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta, date as date_cls
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -288,6 +293,55 @@ def ensure_static_data():
         )
 
 
+def nth_weekday_of_month(year, month, weekday, n):
+    """The nth occurrence of `weekday` (0=Monday..6=Sunday) in the given
+    month; n=-1 means the last occurrence. Used to compute floating
+    holidays (Labor Day, MLK Day, Memorial Day, Thanksgiving) per year
+    without hardcoding dates that would need updating annually."""
+    if n > 0:
+        d = date_cls(year, month, 1)
+        return d + timedelta(days=(weekday - d.weekday()) % 7 + 7 * (n - 1))
+    next_month = date_cls(year + 1, 1, 1) if month == 12 else date_cls(year, month + 1, 1)
+    d = next_month - timedelta(days=1)
+    return d - timedelta(days=(d.weekday() - weekday) % 7)
+
+
+def holiday_schedule_override(d):
+    """GoCary's actual holiday service policy (per gocary.org/service-hours-
+    holidays, checked 2026-09-08) runs a Sunday-level schedule on most major
+    holidays -- not the calendar day's normal weekday/Saturday pattern --
+    and is fully closed on Thanksgiving and Christmas. The static GTFS feed
+    has no way to express this itself (calendar_dates.txt's own holiday
+    exceptions are stale/inert -- see active_service_ids()'s docstring), so
+    this maps known holiday dates directly to which schedule to actually
+    expect. Added after a real holiday (Labor Day, 2026-09-07) produced 288
+    false no_show + 29 false route_gap events because the monitor expected
+    a full regular Monday schedule instead of the Sunday-level service
+    GoCary actually ran. Returns "sunday" (evaluate against Sunday's
+    day-of-week pattern), "closed" (no scheduled trips expected at all), or
+    None (no override -- Good Friday, Juneteenth, Veterans Day, and the
+    days after Thanksgiving/Christmas all run GoCary's regular schedule for
+    that calendar day, so they need no special handling)."""
+    y = d.year
+    sunday_holidays = {
+        date_cls(y, 1, 1),                     # New Year's Day
+        nth_weekday_of_month(y, 1, 0, 3),       # MLK Day: 3rd Monday of January
+        nth_weekday_of_month(y, 5, 0, -1),      # Memorial Day: last Monday of May
+        date_cls(y, 7, 4),                      # 4th of July
+        nth_weekday_of_month(y, 9, 0, 1),       # Labor Day: 1st Monday of September
+        date_cls(y, 12, 24),                    # Christmas Eve (GoCary ends service at 7pm; not modeled precisely)
+    }
+    closed_holidays = {
+        nth_weekday_of_month(y, 11, 3, 4),      # Thanksgiving: 4th Thursday of November
+        date_cls(y, 12, 25),                    # Christmas
+    }
+    if d in closed_holidays:
+        return "closed"
+    if d in sunday_holidays:
+        return "sunday"
+    return None
+
+
 def active_service_ids(calendar, calendar_dates, date_obj):
     """GoCary's mirrored static GTFS calendar.txt only has start_date/
     end_date ranges through 2024-12-31 (confirmed by inspecting the
@@ -308,12 +362,16 @@ def active_service_ids(calendar, calendar_dates, date_obj):
     mirror, so holiday-specific overrides are effectively inert until
     GoCary/Trillium publish a fresher feed -- not fixable from this side,
     but the matching logic below is left in place so it starts working
-    again automatically whenever that happens."""
+    again automatically whenever that happens. Real holidays are instead
+    handled by holiday_schedule_override() above, which this calls."""
     if not calendar:
+        return set()
+    override = holiday_schedule_override(date_obj)
+    if override == "closed":
         return set()
     latest_end = max(c["end_date"] for c in calendar.values())
     date_str = date_obj.strftime("%Y%m%d")
-    day_key = DAY_KEYS[date_obj.weekday()]
+    day_key = DAY_KEYS[6] if override == "sunday" else DAY_KEYS[date_obj.weekday()]
     active = {sid for sid, c in calendar.items() if c["end_date"] == latest_end and c.get(day_key)}
     for key, extype in calendar_dates.items():
         sid, d = key.split("|", 1)
