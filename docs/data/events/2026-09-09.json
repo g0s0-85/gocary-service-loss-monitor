@@ -70,6 +70,20 @@
       "vehicle_id": "1516",
       "lat": 35.73726272583008,
       "lon": -78.8887710571289
+    },
+    {
+      "id": "severe_delay:d035a3b4-d37e-4c34-9590-5a649b25e966",
+      "type": "severe_delay",
+      "trip_id": "d035a3b4-d37e-4c34-9590-5a649b25e966",
+      "route_id": "GA1",
+      "route_short_name": "GA1",
+      "detected_at": "2026-09-09T21:26:16.897116+00:00",
+      "resolved_at": null,
+      "delay_seconds": 1207,
+      "alerted": true,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
     }
   ]
 }
