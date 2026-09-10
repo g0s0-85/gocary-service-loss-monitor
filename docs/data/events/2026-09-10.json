@@ -42,6 +42,18 @@
       "vehicle_id": null,
       "lat": null,
       "lon": null
+    },
+    {
+      "id": "route_gap:GA1:2026-09-10T23:51:11.403099+00:00",
+      "type": "route_gap",
+      "trip_id": null,
+      "route_id": "GA1",
+      "route_short_name": "GA1",
+      "detected_at": "2026-09-10T23:51:11.403102+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true,
+      "alerted_resolved": false
     }
   ]
 }
