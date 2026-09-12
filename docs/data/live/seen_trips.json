@@ -5174,7 +5174,7 @@
     "c5bc30c3-5ce5-4ee6-beba-0ea5ce908260": {
       "route_id": "4",
       "first_seen": "2026-09-11T23:36:15.132018+00:00",
-      "last_seen": "2026-09-12T02:40:17.852024+00:00",
+      "last_seen": "2026-09-12T02:41:10.675917+00:00",
       "max_delay": 47,
       "canceled": false,
       "vehicle_id": "1518",
@@ -5194,7 +5194,7 @@
     "8e162d2d-f71e-4177-8ae1-105d4abbb4eb": {
       "route_id": "6",
       "first_seen": "2026-09-11T23:57:11.112712+00:00",
-      "last_seen": "2026-09-12T02:40:17.852024+00:00",
+      "last_seen": "2026-09-12T02:41:10.675917+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
