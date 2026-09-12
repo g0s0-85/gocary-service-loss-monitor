@@ -5194,12 +5194,12 @@
     "8e162d2d-f71e-4177-8ae1-105d4abbb4eb": {
       "route_id": "6",
       "first_seen": "2026-09-11T23:57:11.112712+00:00",
-      "last_seen": "2026-09-12T02:43:11.628156+00:00",
-      "max_delay": 0,
+      "last_seen": "2026-09-12T02:44:14.819800+00:00",
+      "max_delay": 42,
       "canceled": false,
-      "vehicle_id": null,
-      "lat": null,
-      "lon": null
+      "vehicle_id": "1518",
+      "lat": 35.78093338012695,
+      "lon": -78.72809600830078
     },
     "cdb92b4d-0f8b-4e27-9af0-8b4d68c628fa": {
       "route_id": "3",
