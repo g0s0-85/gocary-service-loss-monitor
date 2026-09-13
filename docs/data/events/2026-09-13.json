@@ -1,8 +1,6 @@
 {
-  "updated_at": "2026-09-13T20:40:19.922346+00:00",
   "date": "2026-09-13",
-  "open_route_gaps": [],
-  "today_events": [
+  "events": [
     {
       "id": "no_show:1:34080",
       "type": "no_show",
