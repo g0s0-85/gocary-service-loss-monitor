@@ -1196,6 +1196,19 @@
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true
+    },
+    {
+      "id": "no_show:1:59280",
+      "type": "no_show",
+      "trip_id": null,
+      "route_id": "1",
+      "route_short_name": "1",
+      "scheduled_start_s": 59280,
+      "scheduled_end_s": 60780,
+      "detected_at": "2026-09-13T21:08:13.135784+00:00",
+      "resolved_at": null,
+      "delay_seconds": null,
+      "alerted": true
     }
   ]
 }
