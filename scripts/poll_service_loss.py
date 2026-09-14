@@ -13,7 +13,10 @@ dispatch logs:
                   Suppressed entirely on the monitor's first day of operation
                   (status.json's first_run_date) since a partial day always
                   looks like a deficit for reasons that have nothing to do
-                  with real service loss -- see main()/detect_events().
+                  with real service loss -- see main()/detect_events(). Also
+                  suppressed for any scheduled window that closed during an
+                  outage of the monitor itself (POLLING_GAP_S) -- an outage
+                  looks identical to a real no-show otherwise.
   - severe_delay -- a trip that did run, but fell so far behind (>20 min) that
                   it's effectively a missed connection for anyone relying on it
   - route_gap  -- a route that should have live coverage right now (it has a
@@ -80,6 +83,19 @@ NO_SHOW_GRACE_S = 15 * 60
 # before we treat it as a coverage gap, counted only while the route has at
 # least one scheduled trip that should currently be running.
 ROUTE_GAP_S = 20 * 60
+
+# If the gap since the previous successful poll exceeds this, treat it as
+# an outage of the *monitor itself* (e.g. the external cron-job.org
+# trigger silently stopping) rather than normal polling jitter. Confirmed
+# necessary the hard way: 2026-09-13 (Sunday) had a ~24-hour gap in polling
+# (cron-job.org stopped firing, unrelated to this code), and when it
+# resumed, every scheduled trip whose window had closed *during the
+# outage* looked identical to a genuine no-show -- 142 false ones fired in
+# a single poll. route_gap doesn't need an equivalent guard: it compares
+# against route_activity, which poll_seen() always refreshes with the
+# current poll's live data *before* detect_events() reads it, so a stale
+# last-seen timestamp never survives to be checked.
+POLLING_GAP_S = 30 * 60
 
 ROUTES_MAX_AGE_S = 7 * 24 * 3600
 
@@ -474,11 +490,21 @@ def route_name(routes, route_id):
     return routes.get(route_id, {}).get("short_name", route_id)
 
 
-def detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s, first_run_date):
+def detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s, first_run_date, gap_s):
     path = EVENTS_DIR / f"{date}.json"
     day = load_json(path, {"date": date, "events": []})
     existing_ids = {e["id"] for e in day["events"]}
     new_events = []
+
+    # See POLLING_GAP_S: if the monitor itself just came back from an
+    # outage, don't trust no_show evaluation for anything whose window
+    # closed *before* now -- we have no idea whether those trips ran, only
+    # that we weren't watching. coverage_start_s only ever advances, and
+    # persists across polls within the same day (stored in the day's own
+    # events file) so it keeps applying even after the gap itself is over.
+    if gap_s is not None and gap_s > POLLING_GAP_S:
+        day["coverage_start_s"] = max(day.get("coverage_start_s", 0), now_s)
+    coverage_start_s = day.get("coverage_start_s", 0)
 
     def add(event):
         if event["id"] in existing_ids:
@@ -568,7 +594,10 @@ def detect_events(date, seen, route_activity, schedule, routes, now_dt, now_s, f
     if date != first_run_date:
         for route_id, trips in scheduled_by_route.items():
             trips = sorted(trips, key=lambda t: t["start_s"])
-            closed = [t for t in trips if t["end_s"] + NO_SHOW_GRACE_S < now_s]
+            closed = [
+                t for t in trips
+                if t["end_s"] + NO_SHOW_GRACE_S < now_s and t["start_s"] >= coverage_start_s
+            ]
             observed_count = len(observed_by_route.get(route_id, []))
             if observed_count >= len(closed):
                 continue
@@ -678,6 +707,7 @@ def main():
     status = load_json(STATUS_FILE, {"last_polled": None, "last_error": None, "polls_run": 0})
     if "first_run_date" not in status:
         status["first_run_date"] = now_service_dt().date().isoformat()
+    previous_last_polled = status.get("last_polled")
 
     try:
         schedule, routes = ensure_static_data()
@@ -687,10 +717,14 @@ def main():
         now_dt = now_service_dt()
         date = now_dt.date().isoformat()
         now_s = seconds_since_service_midnight(now_dt)
+        gap_s = (
+            (now_dt - datetime.fromisoformat(previous_last_polled)).total_seconds()
+            if previous_last_polled else None
+        )
 
         seen, route_activity = poll_seen(tu_feed, vp_feed, date)
         day, new_events, resolved_events = detect_events(
-            date, seen, route_activity, schedule, routes, now_dt, now_s, status["first_run_date"])
+            date, seen, route_activity, schedule, routes, now_dt, now_s, status["first_run_date"], gap_s)
         alert_and_mark(day, new_events, resolved_events, date)
         write_events_index()
         write_active_events(date, day)
