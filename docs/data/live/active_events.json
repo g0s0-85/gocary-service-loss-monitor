@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-16T11:07:12.401691+00:00",
+  "updated_at": "2026-09-16T11:08:13.784908+00:00",
   "date": "2026-09-16",
   "open_route_gaps": [],
   "today_events": [
@@ -26,6 +26,20 @@
       "detected_at": "2026-09-16T11:02:12.538511+00:00",
       "resolved_at": null,
       "delay_seconds": 1259,
+      "alerted": true,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "canceled:2da76faf-431a-413f-8090-a924409aa9aa",
+      "type": "canceled",
+      "trip_id": "2da76faf-431a-413f-8090-a924409aa9aa",
+      "route_id": "4",
+      "route_short_name": "4",
+      "detected_at": "2026-09-16T11:08:13.783545+00:00",
+      "resolved_at": null,
+      "delay_seconds": 1582,
       "alerted": true,
       "vehicle_id": null,
       "lat": null,
