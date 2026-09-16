@@ -1,10 +1,10 @@
 {
-  "last_polled": "2026-09-16T11:02:12.540262+00:00",
+  "last_polled": "2026-09-16T11:03:12.419870+00:00",
   "last_error": null,
-  "polls_run": 18089,
+  "polls_run": 18090,
   "events_today": 2,
   "open_route_gaps": 0,
-  "new_events_this_poll": 1,
+  "new_events_this_poll": 0,
   "first_run_date": "2026-09-02",
   "config": {
     "severe_delay_min": 20,
