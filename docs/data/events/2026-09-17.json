@@ -14,6 +14,34 @@
       "vehicle_id": "1515",
       "lat": 35.78830337524414,
       "lon": -78.78233337402344
+    },
+    {
+      "id": "canceled:73098c6e-6291-467f-83dd-4715f880642a",
+      "type": "canceled",
+      "trip_id": "73098c6e-6291-467f-83dd-4715f880642a",
+      "route_id": "9",
+      "route_short_name": "9",
+      "detected_at": "2026-09-17T17:01:11.096916+00:00",
+      "resolved_at": null,
+      "delay_seconds": 0,
+      "alerted": true,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "canceled:b2a116c0-d2d1-467c-8966-9c823efa4c5f",
+      "type": "canceled",
+      "trip_id": "b2a116c0-d2d1-467c-8966-9c823efa4c5f",
+      "route_id": "9",
+      "route_short_name": "9",
+      "detected_at": "2026-09-17T17:01:11.096925+00:00",
+      "resolved_at": null,
+      "delay_seconds": 0,
+      "alerted": true,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
     }
   ]
 }
