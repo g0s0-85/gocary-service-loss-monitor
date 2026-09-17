@@ -1,4 +1,19 @@
 {
   "date": "2026-09-17",
-  "events": []
+  "events": [
+    {
+      "id": "severe_delay:708bb38a-b201-4982-ac5f-8c9d03658f73",
+      "type": "severe_delay",
+      "trip_id": "708bb38a-b201-4982-ac5f-8c9d03658f73",
+      "route_id": "1",
+      "route_short_name": "1",
+      "detected_at": "2026-09-17T16:17:11.067051+00:00",
+      "resolved_at": null,
+      "delay_seconds": 2021,
+      "alerted": true,
+      "vehicle_id": "1515",
+      "lat": 35.78830337524414,
+      "lon": -78.78233337402344
+    }
+  ]
 }
