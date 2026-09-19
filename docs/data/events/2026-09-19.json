@@ -98,6 +98,20 @@
       "vehicle_id": null,
       "lat": null,
       "lon": null
+    },
+    {
+      "id": "severe_delay:383f48ba-fac1-4fef-a176-990e1b3d9f8a",
+      "type": "severe_delay",
+      "trip_id": "383f48ba-fac1-4fef-a176-990e1b3d9f8a",
+      "route_id": "9",
+      "route_short_name": "9",
+      "detected_at": "2026-09-19T16:28:13.730007+00:00",
+      "resolved_at": null,
+      "delay_seconds": 1664,
+      "alerted": true,
+      "vehicle_id": "1524",
+      "lat": 35.73997497558594,
+      "lon": -78.84882354736328
     }
   ]
 }
