@@ -112,6 +112,34 @@
       "vehicle_id": "1524",
       "lat": 35.73997497558594,
       "lon": -78.84882354736328
+    },
+    {
+      "id": "severe_delay:46764dd9-9193-4fb6-8a14-46ef32cd8b47",
+      "type": "severe_delay",
+      "trip_id": "46764dd9-9193-4fb6-8a14-46ef32cd8b47",
+      "route_id": "GA1",
+      "route_short_name": "GA1",
+      "detected_at": "2026-09-19T18:33:13.165662+00:00",
+      "resolved_at": null,
+      "delay_seconds": 3778,
+      "alerted": true,
+      "vehicle_id": "1515",
+      "lat": 35.732669830322266,
+      "lon": -78.84502410888672
+    },
+    {
+      "id": "severe_delay:d7a3cd34-f0b4-4f4d-afe1-d5d1f5c664b8",
+      "type": "severe_delay",
+      "trip_id": "d7a3cd34-f0b4-4f4d-afe1-d5d1f5c664b8",
+      "route_id": "GA1",
+      "route_short_name": "GA1",
+      "detected_at": "2026-09-19T18:33:13.165667+00:00",
+      "resolved_at": null,
+      "delay_seconds": 3701,
+      "alerted": true,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
     }
   ]
 }
