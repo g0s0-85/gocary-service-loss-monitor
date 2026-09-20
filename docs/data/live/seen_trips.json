@@ -1314,7 +1314,7 @@
     "88f74778-bf97-483f-bafb-0af616850269": {
       "route_id": "6",
       "first_seen": "2026-09-20T16:21:10.205430+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 69,
       "canceled": false,
       "vehicle_id": "1524",
@@ -1324,7 +1324,7 @@
     "a938edba-beaf-46ff-8987-84fc6a5da074": {
       "route_id": "7",
       "first_seen": "2026-09-20T16:22:14.902001+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 510,
       "canceled": false,
       "vehicle_id": "1528",
@@ -1344,7 +1344,7 @@
     "c7c9115b-b303-46f3-b8a6-cbd387f27845": {
       "route_id": "9",
       "first_seen": "2026-09-20T16:22:14.902001+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 120,
       "canceled": false,
       "vehicle_id": "1525",
@@ -1354,7 +1354,7 @@
     "882df889-d285-4ef3-86ef-c701907fe833": {
       "route_id": "4",
       "first_seen": "2026-09-20T16:26:14.497459+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 322,
       "canceled": false,
       "vehicle_id": "1527",
@@ -1364,7 +1364,7 @@
     "1b256e60-4082-426e-9e9e-a4b2d1136975": {
       "route_id": "GA1",
       "first_seen": "2026-09-20T16:27:11.210999+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 127,
       "canceled": false,
       "vehicle_id": "1522",
@@ -1384,12 +1384,12 @@
     "27004ad7-5703-4d0e-a2c5-e90eedbf249b": {
       "route_id": "1",
       "first_seen": "2026-09-20T16:30:17.248935+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 336,
       "canceled": false,
       "vehicle_id": "1526",
-      "lat": 35.77555847167969,
-      "lon": -78.76410675048828
+      "lat": 35.77942657470703,
+      "lon": -78.76411437988281
     },
     "48ece5a3-d7c3-402d-a9cb-2d2a8ae17ff3": {
       "route_id": "3",
@@ -1404,7 +1404,7 @@
     "0fece261-665f-4870-8c05-e7f4c405790d": {
       "route_id": "4",
       "first_seen": "2026-09-20T16:50:51.768998+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 26,
       "canceled": false,
       "vehicle_id": "1524",
@@ -1424,7 +1424,7 @@
     "cfff15bd-299a-461d-ab42-b667afbbf23c": {
       "route_id": "1",
       "first_seen": "2026-09-20T16:50:51.768998+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": "1528",
@@ -1434,7 +1434,7 @@
     "a6b35ab6-08d3-4c6b-9e63-6fdadf5788bf": {
       "route_id": "GA1",
       "first_seen": "2026-09-20T16:52:13.178407+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 112,
       "canceled": false,
       "vehicle_id": "1522",
@@ -1444,17 +1444,17 @@
     "c9d00d61-575d-42d9-865a-552e3e1ee305": {
       "route_id": "6",
       "first_seen": "2026-09-20T16:54:30.362525+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 237,
       "canceled": false,
-      "vehicle_id": null,
-      "lat": null,
-      "lon": null
+      "vehicle_id": "1527",
+      "lat": 35.78826904296875,
+      "lon": -78.78262329101562
     },
     "8437f093-2cee-4314-aaa7-168126a5fa8e": {
       "route_id": "2",
       "first_seen": "2026-09-20T16:54:30.362525+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": "1525",
@@ -1464,7 +1464,7 @@
     "489eeeca-06f8-4c8f-bbb4-f866de0d92d0": {
       "route_id": "7",
       "first_seen": "2026-09-20T16:58:13.535350+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 604,
       "canceled": false,
       "vehicle_id": null,
@@ -1474,7 +1474,7 @@
     "554a87da-0a5a-4654-8705-d5213e22ef29": {
       "route_id": "6",
       "first_seen": "2026-09-20T17:01:11.326372+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1484,7 +1484,7 @@
     "ed438945-26a9-4618-8cae-ad5bbe3bbd02": {
       "route_id": "4",
       "first_seen": "2026-09-20T17:01:11.326372+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1494,7 +1494,7 @@
     "c5b7fca8-7fca-489b-81a4-b08162d089a2": {
       "route_id": "9",
       "first_seen": "2026-09-20T17:01:11.326372+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1504,7 +1504,7 @@
     "8b1d507b-5aff-4cc7-b63d-bed409290824": {
       "route_id": "1",
       "first_seen": "2026-09-20T17:01:11.326372+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1524,7 +1524,7 @@
     "984323f5-b4e0-461f-9a21-47466213d270": {
       "route_id": "7",
       "first_seen": "2026-09-20T17:01:11.326372+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1534,7 +1534,7 @@
     "50c991ed-4b91-40d7-b9fe-58253ce4bb61": {
       "route_id": "GA1",
       "first_seen": "2026-09-20T17:01:11.326372+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1544,7 +1544,7 @@
     "1c321f03-4b59-4098-b67d-bdc4e5dd32bb": {
       "route_id": "GA1",
       "first_seen": "2026-09-20T17:01:11.326372+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 37,
       "canceled": false,
       "vehicle_id": null,
@@ -1554,7 +1554,7 @@
     "e2054fe0-3d65-4751-91f4-588e1a1a2865": {
       "route_id": "2",
       "first_seen": "2026-09-20T17:01:11.326372+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1564,7 +1564,7 @@
     "950da6e5-82dc-4d90-9c7a-172b53d78e17": {
       "route_id": "7",
       "first_seen": "2026-09-20T17:01:11.326372+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1574,7 +1574,7 @@
     "f31add54-88f8-4125-8ada-3b443b40f11c": {
       "route_id": "1",
       "first_seen": "2026-09-20T17:01:11.326372+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1584,7 +1584,7 @@
     "c19b9cae-74d0-4137-8f4d-7b7aba026407": {
       "route_id": "6",
       "first_seen": "2026-09-20T17:01:11.326372+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1594,7 +1594,7 @@
     "6d2f2f71-b8fe-473e-b62e-fc074e38b48b": {
       "route_id": "4",
       "first_seen": "2026-09-20T17:01:11.326372+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1634,7 +1634,7 @@
     "fd0bc411-cbbb-4f53-ae40-fc6ec0e49ed0": {
       "route_id": "3",
       "first_seen": "2026-09-20T17:31:10.496972+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1644,7 +1644,7 @@
     "8a087bcd-e7c9-4996-8667-61fd828dfc6f": {
       "route_id": "5",
       "first_seen": "2026-09-20T17:31:10.496972+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1654,8 +1654,8 @@
     "fbcad144-b871-47bf-99a6-e3eebf8f5b69": {
       "route_id": "5",
       "first_seen": "2026-09-20T17:31:10.496972+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
-      "max_delay": 38,
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
+      "max_delay": 98,
       "canceled": false,
       "vehicle_id": null,
       "lat": null,
@@ -1664,7 +1664,7 @@
     "4305c9ad-3fb7-4ea6-b7f7-735eae3882b1": {
       "route_id": "3",
       "first_seen": "2026-09-20T17:31:10.496972+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 159,
       "canceled": false,
       "vehicle_id": "1530",
@@ -1684,7 +1684,7 @@
     "e547c023-d191-49f7-b6c9-1486f98eaa53": {
       "route_id": "GA1",
       "first_seen": "2026-09-20T18:21:10.378412+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1694,7 +1694,7 @@
     "5a9592d2-c8d3-475a-9d09-83035c7d423b": {
       "route_id": "6",
       "first_seen": "2026-09-20T18:24:14.360143+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1704,7 +1704,7 @@
     "a597b8fc-4104-41b8-8846-41399f2857e5": {
       "route_id": "4",
       "first_seen": "2026-09-20T18:26:11.995329+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1714,7 +1714,7 @@
     "6053796a-c227-48fc-b4cd-f7194a6bc711": {
       "route_id": "9",
       "first_seen": "2026-09-20T18:27:12.113588+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1734,7 +1734,7 @@
     "5cf1b97c-ba8b-4362-971c-2b6fc16d589a": {
       "route_id": "7",
       "first_seen": "2026-09-20T18:31:48.742086+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1744,7 +1744,7 @@
     "e5ec32b9-cd14-4191-adfb-02e36761602c": {
       "route_id": "1",
       "first_seen": "2026-09-20T18:33:10.544690+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1754,7 +1754,7 @@
     "67536e14-a96a-4d6e-a6c5-8ab11ebe3cca": {
       "route_id": "3",
       "first_seen": "2026-09-20T18:45:17.197270+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1764,7 +1764,7 @@
     "3cbab8bf-9dcf-4c84-af55-d48febe470e0": {
       "route_id": "4",
       "first_seen": "2026-09-20T18:50:16.826168+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1774,7 +1774,7 @@
     "f89ceef2-6f92-49b5-ba3f-fe619efd9818": {
       "route_id": "1",
       "first_seen": "2026-09-20T18:51:11.385058+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1784,7 +1784,7 @@
     "d3227633-fb6d-4b8e-88a6-e74b54a734f6": {
       "route_id": "GA1",
       "first_seen": "2026-09-20T18:51:11.385058+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
@@ -1794,7 +1794,17 @@
     "5efff980-11e2-4c14-a8b8-910dbc3e2c6a": {
       "route_id": "2",
       "first_seen": "2026-09-20T18:56:14.122747+00:00",
-      "last_seen": "2026-09-20T18:57:11.079712+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
+      "max_delay": 0,
+      "canceled": false,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
+    },
+    "5bb462a0-6865-4efa-8d2c-cd2aa0bd2cb0": {
+      "route_id": "6",
+      "first_seen": "2026-09-20T18:58:13.633009+00:00",
+      "last_seen": "2026-09-20T18:58:13.633009+00:00",
       "max_delay": 0,
       "canceled": false,
       "vehicle_id": null,
