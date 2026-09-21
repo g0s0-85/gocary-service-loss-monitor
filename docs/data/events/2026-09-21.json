@@ -42,6 +42,20 @@
       "vehicle_id": null,
       "lat": null,
       "lon": null
+    },
+    {
+      "id": "canceled:b3e451f1-da05-4dda-ac2a-3f4b61f7ad73",
+      "type": "canceled",
+      "trip_id": "b3e451f1-da05-4dda-ac2a-3f4b61f7ad73",
+      "route_id": "4",
+      "route_short_name": "4",
+      "detected_at": "2026-09-21T21:29:14.859138+00:00",
+      "resolved_at": null,
+      "delay_seconds": 0,
+      "alerted": true,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
     }
   ]
 }
