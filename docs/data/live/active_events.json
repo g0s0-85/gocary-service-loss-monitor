@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-25T01:09:14.468233+00:00",
+  "updated_at": "2026-09-25T01:10:15.920840+00:00",
   "date": "2026-09-24",
   "open_route_gaps": [],
   "today_events": [
@@ -189,6 +189,20 @@
       "resolved_at": null,
       "delay_seconds": null,
       "alerted": true
+    },
+    {
+      "id": "severe_delay:2c158180-5c84-4d2f-9865-7ac1cb53ea3e",
+      "type": "severe_delay",
+      "trip_id": "2c158180-5c84-4d2f-9865-7ac1cb53ea3e",
+      "route_id": "5",
+      "route_short_name": "5",
+      "detected_at": "2026-09-25T01:10:15.919067+00:00",
+      "resolved_at": null,
+      "delay_seconds": 1220,
+      "alerted": true,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
     }
   ]
 }
