@@ -14,6 +14,34 @@
       "vehicle_id": null,
       "lat": null,
       "lon": null
+    },
+    {
+      "id": "severe_delay:a58bb73a-1222-4fae-b623-ac31c88e1dc4",
+      "type": "severe_delay",
+      "trip_id": "a58bb73a-1222-4fae-b623-ac31c88e1dc4",
+      "route_id": "9",
+      "route_short_name": "9",
+      "detected_at": "2026-09-26T11:26:12.164371+00:00",
+      "resolved_at": null,
+      "delay_seconds": 2594,
+      "alerted": true,
+      "vehicle_id": null,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "severe_delay:db283cf5-639b-4454-b374-4b1e0e1dbbcb",
+      "type": "severe_delay",
+      "trip_id": "db283cf5-639b-4454-b374-4b1e0e1dbbcb",
+      "route_id": "9",
+      "route_short_name": "9",
+      "detected_at": "2026-09-26T11:26:12.164375+00:00",
+      "resolved_at": null,
+      "delay_seconds": 3345,
+      "alerted": true,
+      "vehicle_id": "1526",
+      "lat": 35.78810119628906,
+      "lon": -78.78120422363281
     }
   ]
 }
