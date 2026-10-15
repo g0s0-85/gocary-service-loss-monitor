@@ -63,7 +63,10 @@ from google.transit import gtfs_realtime_pb2
 
 VEHICLE_POSITIONS_URL = "https://www.gocarylive.org/GTFS/Realtime/GTFS_VehiclePositions.pb"
 TRIP_UPDATES_URL = "https://www.gocarylive.org/GTFS/Realtime/GTFS_TripUpdates.pb"
-STATIC_GTFS_URL = "http://data.trilliumtransit.com/gtfs/cary-transit-nc-us/cary-transit-nc-us.zip"
+STATIC_GTFS_URL = "https://data.trilliumtransit.com/gtfs/cary-transit-nc-us/cary-transit-nc-us.zip"
+# Previously plain http. Kept only as a fallback in case the host doesn't serve https; once a
+# run log shows the https URL working, delete this and the fallback in ensure_static_data().
+STATIC_GTFS_FALLBACK_URL = STATIC_GTFS_URL.replace("https://", "http://", 1)
 
 SERVICE_TZ = ZoneInfo("America/New_York")
 
@@ -192,8 +195,14 @@ def ensure_static_data():
                 return existing_schedule, load_json(ROUTES_FILE, {})
 
     try:
-        resp = requests.get(STATIC_GTFS_URL, timeout=60)
-        resp.raise_for_status()
+        try:
+            resp = requests.get(STATIC_GTFS_URL, timeout=60)
+            resp.raise_for_status()
+            print(f"Static GTFS fetched over https ({len(resp.content)} bytes)")
+        except requests.RequestException as https_exc:
+            print(f"Warning: https static GTFS fetch failed ({https_exc}); falling back to http")
+            resp = requests.get(STATIC_GTFS_FALLBACK_URL, timeout=60)
+            resp.raise_for_status()
         zf = zipfile.ZipFile(io.BytesIO(resp.content))
         fetched_at = now_iso()
 
